@@ -100,13 +100,24 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="不务正业的博客">
-<meta property="og:url" content="http://bowiee.github.io/archives/2019/index.html">
+  <meta name="description" content="有些情况下端口号3306会被占用，例如我们卸载了Mysql重新安装时就会出现这种情况。解决方案如下：1.打开命令窗口（windows+R,输入cmd）2.输入命令  netstat -ano（查看端口的使用情况）同时我们需要记住，后面的PID数字，也就是这里的47483.打开任务管理器4.点击查看详细信息在这里可以点击PID，它会按照从小到大的顺序排列，之后找到4478，右键关闭即可。">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安装Mysql时端口号3306被占用的处理方法">
+<meta property="og:url" content="http://bowiee.github.io/2019/07/25/安装Mysql时端口号3306被占用的处理方法/index.html">
 <meta property="og:site_name" content="不务正业的博客">
+<meta property="og:description" content="有些情况下端口号3306会被占用，例如我们卸载了Mysql重新安装时就会出现这种情况。解决方案如下：1.打开命令窗口（windows+R,输入cmd）2.输入命令  netstat -ano（查看端口的使用情况）同时我们需要记住，后面的PID数字，也就是这里的47483.打开任务管理器4.点击查看详细信息在这里可以点击PID，它会按照从小到大的顺序排列，之后找到4478，右键关闭即可。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/18539550-b14ff8ab766df773.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/18539550-4e9cc7a1bc68d58c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/18539550-aaba95ca8d275e36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/18539550-f8adb210f8ecb2a5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/18539550-6ff6e85eefad0eb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-07-25T11:07:39.245Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="不务正业的博客">
+<meta name="twitter:title" content="安装Mysql时端口号3306被占用的处理方法">
+<meta name="twitter:description" content="有些情况下端口号3306会被占用，例如我们卸载了Mysql重新安装时就会出现这种情况。解决方案如下：1.打开命令窗口（windows+R,输入cmd）2.输入命令  netstat -ano（查看端口的使用情况）同时我们需要记住，后面的PID数字，也就是这里的47483.打开任务管理器4.点击查看详细信息在这里可以点击PID，它会按照从小到大的顺序排列，之后找到4478，右键关闭即可。">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/18539550-b14ff8ab766df773.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -114,7 +125,7 @@
 
   
   
-  <link rel="canonical" href="http://bowiee.github.io/archives/2019/">
+  <link rel="canonical" href="http://bowiee.github.io/2019/07/25/安装Mysql时端口号3306被占用的处理方法/">
 
 
 
@@ -125,7 +136,7 @@
 </script>
 
   
-  <title>归档 | 不务正业的博客</title>
+  <title>安装Mysql时端口号3306被占用的处理方法 | 不务正业的博客</title>
   
 
 
@@ -173,7 +184,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -263,7 +274,7 @@
         
         
           
-          <li class="menu-item menu-item-archives menu-item-active">
+          <li class="menu-item menu-item-archives">
 
     
     
@@ -329,346 +340,229 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bowiee.github.io/2019/07/25/安装Mysql时端口号3306被占用的处理方法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bowiee">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/moon.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不务正业的博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">安装Mysql时端口号3306被占用的处理方法
+
+              
+            
+          </h1>
         
+
+        <div class="post-meta">
+
           
-        
-        嗯..! 目前共计 8 篇日志。 继续努力。
-      </span>
-      
-
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
+          
 
-        
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+              
+                
+              
 
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/07/25/论文阅读 Dynamic Bike Reposition/" itemprop="url">
+              <time title="创建时间：2019-07-25 19:06:22 / 修改时间：19:07:39" itemprop="dateCreated datePublished" datetime="2019-07-25T19:06:22+08:00">2019-07-25</time>
+            </span>
+          
+
+          
             
-              <span itemprop="name">论文阅读：Dynamic Bike Reposition: A Spatio-Temporal Reinforcement Learning Approach</span>
+
             
-          </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-25T19:11:00+08:00" content="2019-07-25">
-          07-25
-        </time>
-      </div>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/踩过的坑/" itemprop="url" rel="index"><span itemprop="name">踩过的坑</span></a></span>
 
-    </header>
-  </article>
+                
+                
+              
+            </span>
+          
 
+          
+            
+            
+          
 
+          
+          
+
+          
+
+          
+
+          <br>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span title="本文字数">195</span>
+            </span>
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span title="阅读时长">1 分钟</span>
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/07/25/eclipse导入java项目/" itemprop="url">
-            
-              <span itemprop="name">eclipse导入java项目后，出现错误提示的解决办法</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-25T19:07:57+08:00" content="2019-07-25">
-          07-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/07/25/安装Mysql时端口号3306被占用的处理方法/" itemprop="url">
-            
-              <span itemprop="name">安装Mysql时端口号3306被占用的处理方法</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-25T19:06:22+08:00" content="2019-07-25">
-          07-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>有些情况下端口号3306会被占用，例如我们卸载了Mysql重新安装时就会出现这种情况。<br><img src="https://upload-images.jianshu.io/upload_images/18539550-b14ff8ab766df773.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="端口号被占用"><br>解决方案如下：<br>1.打开命令窗口（windows+R,输入cmd）<br><img src="https://upload-images.jianshu.io/upload_images/18539550-4e9cc7a1bc68d58c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="打开命令窗口"><br>2.输入命令  netstat -ano（查看端口的使用情况）<br><img src="https://upload-images.jianshu.io/upload_images/18539550-aaba95ca8d275e36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="端口号使用情况"><br>同时我们需要记住，后面的PID数字，也就是这里的4748<br>3.打开任务管理器<br><img src="https://upload-images.jianshu.io/upload_images/18539550-f8adb210f8ecb2a5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="打开任务管理器"><br>4.点击查看详细信息<br><img src="https://upload-images.jianshu.io/upload_images/18539550-6ff6e85eefad0eb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="查看详细信息"><br>在这里可以点击PID，它会按照从小到大的顺序排列，之后找到4478，右键关闭即可。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/07/25/jdbc的连接/" itemprop="url">
-            
-              <span itemprop="name">JDBC的连接设置问题</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-25T19:04:10+08:00" content="2019-07-25">
-          07-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/07/25/XML中的特殊字符/" itemprop="url">
-            
-              <span itemprop="name">错误提示：The reference to entity "useSSL" must end with the ';' delimiter.</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-25T19:00:46+08:00" content="2019-07-25">
-          07-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/07/25/Streaming Graph Partitioning/" itemprop="url">
-            
-              <span itemprop="name">论文阅读: Streaming Graph Partitioning: An Experimental Study</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-25T18:45:57+08:00" content="2019-07-25">
-          07-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/07/25/MySQL WorkBench/" itemprop="url">
-            
-              <span itemprop="name">MySQL WorkBench 如何运行sql文件，将其变为数据库</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-25T16:33:08+08:00" content="2019-07-25">
-          07-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/07/25/JDBC/" itemprop="url">
-            
-              <span itemprop="name">java JDBC编程流程步骤</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-25T15:07:48+08:00" content="2019-07-25">
-          07-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/25/jdbc的连接/" rel="next" title="JDBC的连接设置问题">
+                <i class="fa fa-chevron-left"></i> JDBC的连接设置问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/25/eclipse导入java项目/" rel="prev" title="eclipse导入java项目后，出现错误提示的解决办法">
+                eclipse导入java项目后，出现错误提示的解决办法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -957,6 +851,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
 
   <script src="/js/next-boot.js?v=7.2.0"></script>
 
@@ -978,6 +876,8 @@
 
   
 
+
+  
 
 
   
