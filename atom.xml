@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://bowiee.github.io/"/>
-  <updated>2019-07-26T14:31:52.239Z</updated>
+  <updated>2019-07-27T15:39:38.211Z</updated>
   <id>http://bowiee.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>论文阅读：Maverick: Discovering  Exceptional  Facts  from  Knowledge  Graphs</title>
+    <link href="http://bowiee.github.io/2019/07/27/Maverick/"/>
+    <id>http://bowiee.github.io/2019/07/27/Maverick/</id>
+    <published>2019-07-27T15:33:08.000Z</published>
+    <updated>2019-07-27T15:39:38.211Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="论文阅读：Maverick-Discovering-Exceptional-Facts-from-Knowledge-Graphs"><a href="#论文阅读：Maverick-Discovering-Exceptional-Facts-from-Knowledge-Graphs" class="headerlink" title="论文阅读：Maverick: Discovering  Exceptional  Facts  from  Knowledge  Graphs"></a>论文阅读：Maverick: Discovering  Exceptional  Facts  from  Knowledge  Graphs</h3><p><a href="https://dl.acm.org/citation.cfm?doid=3183713.3183730" target="_blank" rel="noopener">原文链接</a><br>参考资料：<br><a href="https://www.bilibili.com/video/av17996145?from=search&seid=10273290250819735348" target="_blank" rel="noopener">知识图谱介绍</a></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">论文题目：Robust Entity Resolution using Random Graphs</span><br><span class="line">发表时间：SIGMOD’18,June  10-15, 2018, Houston, TX, USA</span><br><span class="line">论文作者：Gensheng Zhang 、 Damian Jimenez、 Chengkai Li</span><br></pre></td></tr></table></figure><p>论文作者详细资料：</p><p><img src="/2019/07/27/Maverick/01.jpg" alt="Gensheng Zhang"><br>2002-2006武汉大学。2010-2012南达科他州立大学。2012年至今德克萨斯大学阿灵顿分校<br>研究方向：数据挖掘，图形挖掘，数据库<br><img src="/2019/07/27/Maverick/02.png" alt="Damian Jimenez"><br>德克萨斯大学阿灵顿分校博士。<br>研究兴趣：NLP，神经网络。<br><img src="/2019/07/27/Maverick/03.png" alt="Chengkai Li"><br>Chengkai Li博士是德克萨斯大学阿灵顿分校计算机科学与工程系副教授，创新数据库与信息系统研究实验室（IDIR）主任。</p><h4 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h4><p>这篇论文的题目是从知识图谱中发现异常事实，所以首先要了解知识图谱。<br>知识图谱是一个将现实世界映射到数据世界，由结点和边组成的语义网络。其中结点代表物理世界的结点或者概念，边代表实体的属性或者结点的关系。因为现实世界中的物体充满着各种各样的关系，知识图谱就是一种合理摆放他们的方式。<br><img src="/2019/07/27/Maverick/04.png" alt="知识图谱"><br>例如在上图就是知识图谱，其中结点表示了，人物和水果。例如最上面那条边，表示了May喜欢橘子这个水果。<br><img src="/2019/07/27/Maverick/05.png" alt="知识图谱的应用"><br>其实知识图谱最开始是由Google提出的，为的就是解决搜索的问题，例如我们可以在谷歌上搜索居里夫人。<br><img src="/2019/07/27/Maverick/06.png" alt="居里夫人"><br>我们可以在搜索界面上看到这样的结果，在右边红色方框的结果就是因为有知识图谱的帮助，所以可以很快的显示出结果。其中左边显示的结果，她是唯一获得两种不同学科诺贝尔奖的人，也是巴黎大学的第一位女教授，这个就是我们要找的特殊事实。<br><img src="/2019/07/27/Maverick/07.png" alt="Maverick"><br>Maverick就是这篇论文提出的处理系统，现实世界里的各种知识会被总结为知识图谱，这个时候，如果我们想了解居里夫人的特殊事实，就对Maverick输入居里夫人，最后会得出关于居里夫人的前k个特殊事实。</p><h4 id="Our-Approach"><a href="#Our-Approach" class="headerlink" title="Our Approach"></a>Our Approach</h4><p><img src="/2019/07/27/Maverick/08.png" alt="关于世界杯的知识图谱"><br>这是关于世界杯的知识图谱中的一部分，S表示运动员，G表示一个进球。ESP表示西班牙，BRA表示巴西，CRO表示克罗地亚。边上的play-for表示某球员是属于某个国家的，scored-by表示这个进球是由指向球员踢进的，awarded-to,表示进球的这一分，是属于指向的球队的，图中红色圆圈的部分，表示的是：巴西国家队的球员S3踢进了G3这个进球，这一分属于巴西队。<br><img src="/2019/07/27/Maverick/09.png" alt="知识图谱"><br>我们可以看到G1，G2，G3这三个进球中，只有G1是属于克罗地亚队得分的球，其他球是巴西队得分，所以在所有进球的这个背景中，G1是属于特殊的那一个，而且我们还可以发现，G1是一个乌龙球，也与其他两球不同。<br><img src="/2019/07/27/Maverick/10.png" alt="知识图谱"><br>那在知识图谱中是如何得出G1是一个乌龙球的呢？首先找出G1,G2,G3这三个进球，所踢进的球员，以及这些球员效力的国家队，也就是在右边的三个Match。<br><img src="/2019/07/27/Maverick/11.png" alt="Context"><br>因为我们现在是要找出，这三个球中的特殊情况，所以必须要放在一定的背景里，才能发现其中的不同，比如我们说居里夫人是唯一得过两次不同学科诺贝尔奖的人，是把她放在所有得过诺贝尔奖的人里去比较得来的。所以，这里我们将这些球都放在巴西队进球的这个背景里，那可以从这个背景里得出怎么样的结论呢，再根据每个进球边上的awarded-to属性，可以得出G1是一个不同的进球，它是一个乌龙球。<br><img src="/2019/07/27/Maverick/12.png" alt="Maverick"><br>前文所讲，我们需要通过知识图谱上面的各种Match找出各种模式，最后的结果就是找到Context，也就是找到我们应该放到什么背景里去比较。这个图那就是代表Maverick的一整个执行流程。<br>首先左上角是知识图谱，Maverick将其中的模式都通过Pattern Generator来生成，再结合context（也就是比较的背景）放到Exceptionality Evaluator中，来选出前k个特殊事实。<br><img src="/2019/07/27/Maverick/13.png" alt="Pattern Generator"><br>那模式构造是怎么样的呢？这里是通过树来构造的，比如这里根结点的g表示的就是所有的进球，g的子节点，就多了一些限制，比如第一个，表示球员S1踢进的所有进球。<br><img src="/2019/07/27/Maverick/14.png" alt="生产Pattern Tree"><br>生产的过程，就是首先根据根节点p0，这里也就是g，通过Context Evaluator来寻找到和g有关的match，最后总结出新的模式，得到p1,p2,p3,p4。<br><img src="/2019/07/27/Maverick/15.png" alt="Beam-search"><br>如果去进行所有的评判，那工作量太大，所以我们只能选出一部分Pattern去进行比较，这里使用集束搜索，设定宽度为2，再使用启发式算法，选出满足要求的两个。<br><img src="/2019/07/27/Maverick/16.png" alt="Maverick工作流程"><br>在进行完Pattern Tree的构建后，Maverick的流程图变为上图所示。现在只剩下，异常评估的这一部分，还没有完成。我们判断异常必须要结合属性，所以在这一块，会将属性构建为属性树。<br><img src="/2019/07/27/Maverick/17.png" alt="属性树"><br>在构建属性树时，也会遵循一定的规则，如果这里有三个属性，a1,a2,a3，会按照这个顺序，如上图所示，进行树的构建。<br><img src="/2019/07/27/Maverick/18.png" alt="属性树"><br>但是为了减少工作量，也会对其进行减少，会设定一个阈值达到的就保留，无法达到的就去掉。<br><img src="/2019/07/27/Maverick/19.png" alt="Maverick"><br>这个就是处理问题完整的流程图，选出top-k个异常值。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;论文阅读：Maverick-Discovering-Exceptional-Facts-from-Knowledge-Graphs&quot;&gt;&lt;a href=&quot;#论文阅读：Maverick-Discovering-Exceptional-Facts-from-Knowle
+      
+    
+    </summary>
+    
+      <category term="论文阅读" scheme="http://bowiee.github.io/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"/>
+    
+    
+      <category term="论文" scheme="http://bowiee.github.io/tags/%E8%AE%BA%E6%96%87/"/>
+    
+  </entry>
   
   <entry>
     <title>论文阅读：Robust Entity Resolution using Random Graphs</title>
