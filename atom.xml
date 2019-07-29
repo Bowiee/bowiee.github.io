@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://bowiee.github.io/"/>
-  <updated>2019-07-28T12:52:13.504Z</updated>
+  <updated>2019-07-29T08:15:34.350Z</updated>
   <id>http://bowiee.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>算法导论：字典树</title>
+    <link href="http://bowiee.github.io/2019/07/29/%E5%AD%97%E5%85%B8%E6%A0%91/"/>
+    <id>http://bowiee.github.io/2019/07/29/字典树/</id>
+    <published>2019-07-29T07:54:11.000Z</published>
+    <updated>2019-07-29T08:15:34.350Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="算法导论：字典树"><a href="#算法导论：字典树" class="headerlink" title="算法导论：字典树"></a>算法导论：字典树</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">定义：Trie树，即字典树，又称单词查找树或键树。是一种用于快速检索的多叉树结构。</span><br><span class="line">     Trie的核心思想是空间换时间。利用字符串的公共前缀来降低查询时间的开销以达到提高效率的目的。</span><br><span class="line">优点：最大限度地减少无谓的字符串比较。</span><br></pre></td></tr></table></figure><p>如果我们给定字符串集合为{b   abc   abd   bcd   abcd   efg   hii}，那么这个字符串的字典树为：<br><img src="/2019/07/29/字典树/01.png" alt="字典树"><br>对于一颗字典树来说，应该具有以下性质：<br><img src="/2019/07/29/字典树/02.png" alt="性质"><br>第二条性质中的到某个结点，就是指到红色结点。</p><h4 id="字典树的构建"><a href="#字典树的构建" class="headerlink" title="字典树的构建"></a>字典树的构建</h4><p><img src="/2019/07/29/字典树/03.png" alt="字典树的构建"><br>现在给出了，许多的字符串，我们从第一个字符串CAI开始构建。首先构建根节点，其次构建出CAI三个结点，<br><img src="/2019/07/29/字典树/04.png" alt="字典树构建"><br>现在构建字符串CAO因为CA已经存在，所以遍历到A，发现O结点并不存在，生成O结点。<br><img src="/2019/07/29/字典树/05.png" alt="字典树构建"><br>以此类推，最后生成的字典树，如上图所示。这个构建过程，每一次都相当于遍历了一个字符串的长度。<br>假如有n个字符串，那么它的时间复杂度就是，n乘上字符串的平均长度。<br><img src="/2019/07/29/字典树/06.png" alt="字典树的构建"><br>对于字典树，在空间上的花费为：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">空间花费：平均单词长度*结点长度*单词数</span><br></pre></td></tr></table></figure><h4 id="字典树的查询"><a href="#字典树的查询" class="headerlink" title="字典树的查询"></a>字典树的查询</h4><p><img src="/2019/07/29/字典树/07.png" alt="构建出字典树"><br>首先我们根据给出的单词，构建出了相应的字典树。<br><img src="/2019/07/29/字典树/08.png" alt="查询"><br>现在，我们要对inn这个单词进行查询，当然是从根节点先开始。<br><img src="/2019/07/29/字典树/09.png" alt="查询"><br>按照结点进行查询，最后可以找到inn这个字符串。那么它的时间复杂度就是这个字符串的长度O(len)。</p><h4 id="字典树的插入"><a href="#字典树的插入" class="headerlink" title="字典树的插入"></a>字典树的插入</h4><p><img src="/2019/07/29/字典树/10.png" alt="插入"><br>现在我们要插入新的字符串atm，那应该怎么做呢？<br><img src="/2019/07/29/字典树/11.png" alt="插入"><br>在走到t结点时，发现没有m结点，所以构造出m结点，并变为红色。</p><h4 id="字典树的删除"><a href="#字典树的删除" class="headerlink" title="字典树的删除"></a>字典树的删除</h4><p><img src="/2019/07/29/字典树/12.png" alt="删除"><br>现在我们要删除字典树中的ant字符串，当然是从根节点开始去做一个查询。<br><img src="/2019/07/29/字典树/13.png" alt="删除"><br>最后找到，结点t并且n结点也并没有其他分支，所以在删除时，会将n-&gt;t全部删除。<br><img src="/2019/07/29/字典树/14.png" alt="删除"><br>最后结果如图所示，时间复杂度也为O(len)。</p><h4 id="字典树的应用"><a href="#字典树的应用" class="headerlink" title="字典树的应用"></a>字典树的应用</h4><p><img src="/2019/07/29/字典树/15.png" alt="字典树的应用"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;算法导论：字典树&quot;&gt;&lt;a href=&quot;#算法导论：字典树&quot; class=&quot;headerlink&quot; title=&quot;算法导论：字典树&quot;&gt;&lt;/a&gt;算法导论：字典树&lt;/h3&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td cl
+      
+    
+    </summary>
+    
+      <category term="算法导论" scheme="http://bowiee.github.io/categories/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA/"/>
+    
+    
+      <category term="算法导论" scheme="http://bowiee.github.io/tags/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA/"/>
+    
+  </entry>
   
   <entry>
     <title>算法导论：线性时间排序</title>
@@ -291,9 +316,9 @@
       <category term="知识总结" scheme="http://bowiee.github.io/categories/%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="java" scheme="http://bowiee.github.io/tags/java/"/>
-    
       <category term="mysql" scheme="http://bowiee.github.io/tags/mysql/"/>
+    
+      <category term="java" scheme="http://bowiee.github.io/tags/java/"/>
     
   </entry>
   
