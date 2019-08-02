@@ -100,13 +100,32 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="不务正业的博客">
-<meta property="og:url" content="http://bowiee.github.io/archives/2019/index.html">
+  <meta name="description" content="快速排序基本思想输入代排数组——&amp;gt;选取基准元——&amp;gt;执行划分操作——&amp;gt;递归对两个数组进行快速排序1、比如这里输入序列{72，6，57，88，60，42，83，73，48}2、下面选取基准元，这里选取72选取基准元后，会用另一个空间存放基准元的数据，用两个指针分别指向数组最前端与最后端，从最后端开始比较，如果比基准元72小，则放在基准元前面，也就是将数据放在前端指针指的数据，这里是4">
+<meta name="keywords" content="算法导论">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法导论：快速排序">
+<meta property="og:url" content="http://bowiee.github.io/2019/08/02/快速排序/index.html">
 <meta property="og:site_name" content="不务正业的博客">
+<meta property="og:description" content="快速排序基本思想输入代排数组——&amp;gt;选取基准元——&amp;gt;执行划分操作——&amp;gt;递归对两个数组进行快速排序1、比如这里输入序列{72，6，57，88，60，42，83，73，48}2、下面选取基准元，这里选取72选取基准元后，会用另一个空间存放基准元的数据，用两个指针分别指向数组最前端与最后端，从最后端开始比较，如果比基准元72小，则放在基准元前面，也就是将数据放在前端指针指的数据，这里是4">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/02/快速排序/01.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/02/快速排序/02.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/02/快速排序/03.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/02/快速排序/04.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/02/快速排序/05.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/02/快速排序/06.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/02/快速排序/08.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/02/快速排序/09.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/02/快速排序/10.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/02/快速排序/11.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/02/快速排序/12.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/02/快速排序/13.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/02/快速排序/14.png">
+<meta property="og:updated_time" content="2019-08-02T15:58:03.114Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="不务正业的博客">
+<meta name="twitter:title" content="算法导论：快速排序">
+<meta name="twitter:description" content="快速排序基本思想输入代排数组——&amp;gt;选取基准元——&amp;gt;执行划分操作——&amp;gt;递归对两个数组进行快速排序1、比如这里输入序列{72，6，57，88，60，42，83，73，48}2、下面选取基准元，这里选取72选取基准元后，会用另一个空间存放基准元的数据，用两个指针分别指向数组最前端与最后端，从最后端开始比较，如果比基准元72小，则放在基准元前面，也就是将数据放在前端指针指的数据，这里是4">
+<meta name="twitter:image" content="http://bowiee.github.io/2019/08/02/快速排序/01.png">
 
 
 
@@ -114,7 +133,7 @@
 
   
   
-  <link rel="canonical" href="http://bowiee.github.io/archives/2019/">
+  <link rel="canonical" href="http://bowiee.github.io/2019/08/02/快速排序/">
 
 
 
@@ -125,7 +144,7 @@
 </script>
 
   
-  <title>归档 | 不务正业的博客</title>
+  <title>算法导论：快速排序 | 不务正业的博客</title>
   
 
 
@@ -173,7 +192,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -263,7 +282,7 @@
         
         
           
-          <li class="menu-item menu-item-archives menu-item-active">
+          <li class="menu-item menu-item-archives">
 
     
     
@@ -329,420 +348,237 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bowiee.github.io/2019/08/02/快速排序/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bowiee">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/moon.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不务正业的博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">算法导论：快速排序
+
+              
+            
+          </h1>
         
+
+        <div class="post-meta">
+
           
-        
-        嗯..! 目前共计 15 篇日志。 继续努力。
-      </span>
-      
-
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
+          
 
-        
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+              
+                
+              
 
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/08/02/快速排序/" itemprop="url">
+              <time title="创建时间：2019-08-02 23:51:29 / 修改时间：23:58:03" itemprop="dateCreated datePublished" datetime="2019-08-02T23:51:29+08:00">2019-08-02</time>
+            </span>
+          
+
+          
             
-              <span itemprop="name">算法导论：快速排序</span>
+
             
-          </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-02T23:51:29+08:00" content="2019-08-02">
-          08-02
-        </time>
-      </div>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法导论/" itemprop="url" rel="index"><span itemprop="name">算法导论</span></a></span>
 
-    </header>
-  </article>
+                
+                
+              
+            </span>
+          
 
+          
+            
+            
+          
 
+          
+          
+
+          
+
+          
+
+          <br>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span title="本文字数">1k</span>
+            </span>
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span title="阅读时长">1 分钟</span>
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/08/01/最大子序列和/" itemprop="url">
-            
-              <span itemprop="name">算法导论：最大子序列和</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-01T22:25:33+08:00" content="2019-08-01">
-          08-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
+      
+        <h3 id="快速排序基本思想"><a href="#快速排序基本思想" class="headerlink" title="快速排序基本思想"></a>快速排序基本思想</h3><p>输入代排数组——&gt;选取基准元——&gt;执行划分操作——&gt;递归对两个数组进行快速排序<br>1、比如这里输入序列{72，6，57，88，60，42，83，73，48}<br>2、下面选取基准元，这里选取72<br><img src="/2019/08/02/快速排序/01.png" alt="选取基准元"><br>选取基准元后，会用另一个空间存放基准元的数据，用两个指针分别指向数组最前端与最后端，从最后端开始比较，如果比基准元72小，则放在基准元前面，也就是将数据放在前端指针指的数据，这里是48&lt;72所以要放在第一个位置。<br>3、执行划分操作<br><img src="/2019/08/02/快速排序/02.png" alt="执行划分操作"><br>再移动前端指针，依次进行数据的改变，当前后指针指向同一个数据时，就是划分结束，将基准元的数据放在指针的位置。<br><img src="/2019/08/02/快速排序/03.png" alt="划分结束"><br>4、递归对两个数组进行快速排序<br><img src="/2019/08/02/快速排序/04.png" alt="递归对两个数组进行快速排序"><br>现在依据第一次的基准元，将数组分为左右两个部分，分别对两个数组进行快速排序，基准元选择第一个数字，也就是48、83作为基准元。<br><img src="/2019/08/02/快速排序/05.png" alt="递归排序"><br>执行划分后得到上图，依次类推执行快速排序。<br><img src="/2019/08/02/快速排序/06.png" alt="划分结束"><br>经过三次划分后，得到了有序的序列。</p>
+<h3 id="快速排序优化方法"><a href="#快速排序优化方法" class="headerlink" title="快速排序优化方法"></a>快速排序优化方法</h3><h4 id="选择基准的方式——固定位置"><a href="#选择基准的方式——固定位置" class="headerlink" title="选择基准的方式——固定位置"></a>选择基准的方式——固定位置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">思想：取待排序列的第一个或最后一个作为基准</span><br></pre></td></tr></table></figure>
 
-        
-        
+<p>就是我们刚才举列子的方式，这种方式在最好的情况下，时间复杂度是O(nlgn)，不过在最坏情况下，也就是这个序列本身是有序的时候，这个排序就会变成冒泡排序，时间复杂度为O(n<sup>2</sup>)<br><img src="/2019/08/02/快速排序/08.png" alt="最坏情况"></p>
+<h4 id="选择基准的方式——随机选择基准"><a href="#选择基准的方式——随机选择基准" class="headerlink" title="选择基准的方式——随机选择基准"></a>选择基准的方式——随机选择基准</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">思想：取待排序列中的任意一个作为基准</span><br></pre></td></tr></table></figure>
 
-        
+<p>简单分析：<br> 基准元的位置是随机的，则出现最坏情况的概率大大降低，最好情况依然是O(nlgn)<br>在整个数组数字全相等时，仍然是 最坏情况，时间复杂度是O(n<sup>2</sup>)</p>
+<h4 id="选择基准的方式——“三数取中”选取基准元"><a href="#选择基准的方式——“三数取中”选取基准元" class="headerlink" title="选择基准的方式——“三数取中”选取基准元"></a>选择基准的方式——“三数取中”选取基准元</h4><p><img src="/2019/08/02/快速排序/09.png" alt="三数取中"><br>这样可以尽可能让划分得到的两个序列尽可能等长，会降低快速排序的时间复杂度。</p>
+<h4 id="快速排序-插入排序"><a href="#快速排序-插入排序" class="headerlink" title="快速排序+插入排序"></a>快速排序+插入排序</h4><p>原因：<br>对于很小和部分有序的数组，快排不如插排好</p>
+<h4 id="“聚key”方法"><a href="#“聚key”方法" class="headerlink" title="“聚key”方法"></a>“聚key”方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">思想：在一次分割结束后，可以把与Key相等的元素聚在一起，继续下次分割时，不用再对与key相等元素分割。</span><br></pre></td></tr></table></figure>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/07/30/后缀树/" itemprop="url">
-            
-              <span itemprop="name">算法导论：后缀树</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-30T21:51:53+08:00" content="2019-07-30">
-          07-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+<p>这里给出序列{1，4，6，7，6，6，7，6，8，6}，<br><img src="/2019/08/02/快速排序/10.png" alt="三数取中"><br>用三数取中的方法会选择出基准元6，最后划分出左右两个子序列。<br><img src="/2019/08/02/快速排序/11.png" alt="聚key"><br>这个方法与其他方法的不同，就是在移动指针时，如果指针的值，和基准元一样，比如这里指向6，那就会将这个数移动到两端（哪一边的指针指向的，就移动到哪一段）。<br><img src="/2019/08/02/快速排序/12.png" alt="聚key"><br>再将两端的key值，移动到与基准相等的地方，最后划分得到左右两个子序列。<br><img src="/2019/08/02/快速排序/13.png" alt="聚key"><br>采用这种方法，能减少迭代次数，提高效率。</p>
+<h3 id="快排及其优化-总结"><a href="#快排及其优化-总结" class="headerlink" title="快排及其优化-总结"></a>快排及其优化-总结</h3><p><img src="/2019/08/02/快速排序/14.png" alt="总结"><br>在优化方面，主要集中在选取基准元和执行划分操作上。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/07/29/字典树/" itemprop="url">
-            
-              <span itemprop="name">算法导论：字典树</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-29T15:54:11+08:00" content="2019-07-29">
-          07-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/07/28/线性时间排序/" itemprop="url">
-            
-              <span itemprop="name">算法导论：线性时间排序</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-28T20:45:07+08:00" content="2019-07-28">
-          07-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/07/27/Maverick/" itemprop="url">
-            
-              <span itemprop="name">论文阅读：Maverick: Discovering  Exceptional  Facts  from  Knowledge  Graphs</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-27T23:33:08+08:00" content="2019-07-27">
-          07-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/07/26/Robust-Entity-Resolution/" itemprop="url">
-            
-              <span itemprop="name">论文阅读：Robust Entity Resolution using Random Graphs</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-26T22:17:25+08:00" content="2019-07-26">
-          07-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/07/25/Dynamic-Bike-Reposition/" itemprop="url">
-            
-              <span itemprop="name">论文阅读：Dynamic Bike Reposition: A Spatio-Temporal Reinforcement Learning Approach</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-25T19:11:00+08:00" content="2019-07-25">
-          07-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/07/25/eclipse导入java项目/" itemprop="url">
-            
-              <span itemprop="name">eclipse导入java项目后，出现错误提示的解决办法</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-25T19:07:57+08:00" content="2019-07-25">
-          07-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/07/25/安装Mysql时端口号3306被占用的处理方法/" itemprop="url">
-            
-              <span itemprop="name">安装Mysql时端口号3306被占用的处理方法</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-25T19:06:22+08:00" content="2019-07-25">
-          07-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/算法导论/" rel="tag"># 算法导论</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/01/最大子序列和/" rel="next" title="算法导论：最大子序列和">
+                <i class="fa fa-chevron-left"></i> 算法导论：最大子序列和
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2019/page/2/">2</a><a class="extend next" rel="next" href="/archives/2019/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
+  </article>
 
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -762,8 +598,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
 
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -895,6 +740,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#快速排序基本思想"><span class="nav-number">1.</span> <span class="nav-text">快速排序基本思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速排序优化方法"><span class="nav-number">2.</span> <span class="nav-text">快速排序优化方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#选择基准的方式——固定位置"><span class="nav-number">2.1.</span> <span class="nav-text">选择基准的方式——固定位置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选择基准的方式——随机选择基准"><span class="nav-number">2.2.</span> <span class="nav-text">选择基准的方式——随机选择基准</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选择基准的方式——“三数取中”选取基准元"><span class="nav-number">2.3.</span> <span class="nav-text">选择基准的方式——“三数取中”选取基准元</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#快速排序-插入排序"><span class="nav-number">2.4.</span> <span class="nav-text">快速排序+插入排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#“聚key”方法"><span class="nav-number">2.5.</span> <span class="nav-text">“聚key”方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快排及其优化-总结"><span class="nav-number">3.</span> <span class="nav-text">快排及其优化-总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -1035,6 +897,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
 
   <script src="/js/next-boot.js?v=7.2.0"></script>
 
@@ -1056,6 +922,8 @@
 
   
 
+
+  
 
 
   

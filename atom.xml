@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://bowiee.github.io/"/>
-  <updated>2019-08-01T14:42:00.113Z</updated>
+  <updated>2019-08-02T15:58:03.114Z</updated>
   <id>http://bowiee.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>算法导论：快速排序</title>
+    <link href="http://bowiee.github.io/2019/08/02/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/"/>
+    <id>http://bowiee.github.io/2019/08/02/快速排序/</id>
+    <published>2019-08-02T15:51:29.000Z</published>
+    <updated>2019-08-02T15:58:03.114Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="快速排序基本思想"><a href="#快速排序基本思想" class="headerlink" title="快速排序基本思想"></a>快速排序基本思想</h3><p>输入代排数组——&gt;选取基准元——&gt;执行划分操作——&gt;递归对两个数组进行快速排序<br>1、比如这里输入序列{72，6，57，88，60，42，83，73，48}<br>2、下面选取基准元，这里选取72<br><img src="/2019/08/02/快速排序/01.png" alt="选取基准元"><br>选取基准元后，会用另一个空间存放基准元的数据，用两个指针分别指向数组最前端与最后端，从最后端开始比较，如果比基准元72小，则放在基准元前面，也就是将数据放在前端指针指的数据，这里是48&lt;72所以要放在第一个位置。<br>3、执行划分操作<br><img src="/2019/08/02/快速排序/02.png" alt="执行划分操作"><br>再移动前端指针，依次进行数据的改变，当前后指针指向同一个数据时，就是划分结束，将基准元的数据放在指针的位置。<br><img src="/2019/08/02/快速排序/03.png" alt="划分结束"><br>4、递归对两个数组进行快速排序<br><img src="/2019/08/02/快速排序/04.png" alt="递归对两个数组进行快速排序"><br>现在依据第一次的基准元，将数组分为左右两个部分，分别对两个数组进行快速排序，基准元选择第一个数字，也就是48、83作为基准元。<br><img src="/2019/08/02/快速排序/05.png" alt="递归排序"><br>执行划分后得到上图，依次类推执行快速排序。<br><img src="/2019/08/02/快速排序/06.png" alt="划分结束"><br>经过三次划分后，得到了有序的序列。</p><h3 id="快速排序优化方法"><a href="#快速排序优化方法" class="headerlink" title="快速排序优化方法"></a>快速排序优化方法</h3><h4 id="选择基准的方式——固定位置"><a href="#选择基准的方式——固定位置" class="headerlink" title="选择基准的方式——固定位置"></a>选择基准的方式——固定位置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">思想：取待排序列的第一个或最后一个作为基准</span><br></pre></td></tr></table></figure><p>就是我们刚才举列子的方式，这种方式在最好的情况下，时间复杂度是O(nlgn)，不过在最坏情况下，也就是这个序列本身是有序的时候，这个排序就会变成冒泡排序，时间复杂度为O(n<sup>2</sup>)<br><img src="/2019/08/02/快速排序/08.png" alt="最坏情况"></p><h4 id="选择基准的方式——随机选择基准"><a href="#选择基准的方式——随机选择基准" class="headerlink" title="选择基准的方式——随机选择基准"></a>选择基准的方式——随机选择基准</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">思想：取待排序列中的任意一个作为基准</span><br></pre></td></tr></table></figure><p>简单分析：<br> 基准元的位置是随机的，则出现最坏情况的概率大大降低，最好情况依然是O(nlgn)<br>在整个数组数字全相等时，仍然是 最坏情况，时间复杂度是O(n<sup>2</sup>)</p><h4 id="选择基准的方式——“三数取中”选取基准元"><a href="#选择基准的方式——“三数取中”选取基准元" class="headerlink" title="选择基准的方式——“三数取中”选取基准元"></a>选择基准的方式——“三数取中”选取基准元</h4><p><img src="/2019/08/02/快速排序/09.png" alt="三数取中"><br>这样可以尽可能让划分得到的两个序列尽可能等长，会降低快速排序的时间复杂度。</p><h4 id="快速排序-插入排序"><a href="#快速排序-插入排序" class="headerlink" title="快速排序+插入排序"></a>快速排序+插入排序</h4><p>原因：<br>对于很小和部分有序的数组，快排不如插排好</p><h4 id="“聚key”方法"><a href="#“聚key”方法" class="headerlink" title="“聚key”方法"></a>“聚key”方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">思想：在一次分割结束后，可以把与Key相等的元素聚在一起，继续下次分割时，不用再对与key相等元素分割。</span><br></pre></td></tr></table></figure><p>这里给出序列{1，4，6，7，6，6，7，6，8，6}，<br><img src="/2019/08/02/快速排序/10.png" alt="三数取中"><br>用三数取中的方法会选择出基准元6，最后划分出左右两个子序列。<br><img src="/2019/08/02/快速排序/11.png" alt="聚key"><br>这个方法与其他方法的不同，就是在移动指针时，如果指针的值，和基准元一样，比如这里指向6，那就会将这个数移动到两端（哪一边的指针指向的，就移动到哪一段）。<br><img src="/2019/08/02/快速排序/12.png" alt="聚key"><br>再将两端的key值，移动到与基准相等的地方，最后划分得到左右两个子序列。<br><img src="/2019/08/02/快速排序/13.png" alt="聚key"><br>采用这种方法，能减少迭代次数，提高效率。</p><h3 id="快排及其优化-总结"><a href="#快排及其优化-总结" class="headerlink" title="快排及其优化-总结"></a>快排及其优化-总结</h3><p><img src="/2019/08/02/快速排序/14.png" alt="总结"><br>在优化方面，主要集中在选取基准元和执行划分操作上。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;快速排序基本思想&quot;&gt;&lt;a href=&quot;#快速排序基本思想&quot; class=&quot;headerlink&quot; title=&quot;快速排序基本思想&quot;&gt;&lt;/a&gt;快速排序基本思想&lt;/h3&gt;&lt;p&gt;输入代排数组——&amp;gt;选取基准元——&amp;gt;执行划分操作——&amp;gt;递归对两个数组进行快速
+      
+    
+    </summary>
+    
+      <category term="算法导论" scheme="http://bowiee.github.io/categories/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA/"/>
+    
+    
+      <category term="算法导论" scheme="http://bowiee.github.io/tags/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA/"/>
+    
+  </entry>
   
   <entry>
     <title>算法导论：最大子序列和</title>
@@ -366,9 +391,9 @@
       <category term="知识总结" scheme="http://bowiee.github.io/categories/%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="java" scheme="http://bowiee.github.io/tags/java/"/>
-    
       <category term="mysql" scheme="http://bowiee.github.io/tags/mysql/"/>
+    
+      <category term="java" scheme="http://bowiee.github.io/tags/java/"/>
     
   </entry>
   
