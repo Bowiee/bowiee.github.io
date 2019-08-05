@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://bowiee.github.io/"/>
-  <updated>2019-08-02T15:58:03.114Z</updated>
+  <updated>2019-08-05T14:52:04.249Z</updated>
   <id>http://bowiee.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>极大团</title>
+    <link href="http://bowiee.github.io/2019/08/04/%E6%9E%81%E5%A4%A7%E5%9B%A2/"/>
+    <id>http://bowiee.github.io/2019/08/04/极大团/</id>
+    <published>2019-08-04T12:59:57.000Z</published>
+    <updated>2019-08-05T14:52:04.249Z</updated>
+    
+    <content type="html"><![CDATA[<p>参考资料：<br><a href="https://www.youtube.com/watch?v=132XR-RLNoY" target="_blank" rel="noopener">Bron-Kerbosch算法视频介绍</a><br><a href="http://blog.sciencenet.cn/blog-1893836-836769.html" target="_blank" rel="noopener">极大团介绍</a><br><a href="https://blog.csdn.net/aspirinvagrant/article/details/40735609" target="_blank" rel="noopener">团、极大团介绍</a></p><h3 id="团-clique"><a href="#团-clique" class="headerlink" title="团(clique)"></a>团(clique)</h3><p>引自wiki：<br> a clique is a subset of vertices of an undirected graph such that every two distinct vertices in the clique are adjacent.<br>意思就是团(clique)就是一个无向图的完全子图，既然是完全图，当然每对顶点之间都必须要有边相连。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">团：无向图的完全子图。</span><br><span class="line">完全图：完全图是一个简单的无向图，其中每对不同的顶点之间都恰连有一条边相连。</span><br></pre></td></tr></table></figure><p><img src="/2019/08/04/极大团/01.png" alt="无向图"><br>给出上图所示的无向图，其中存在着许多的团。<br><img src="/2019/08/04/极大团/02.png" alt="团"><br>比如这里的{0、5}就是一个团，它就是原图的一个完全子图，并且结点之间连接，当然{0、4、5}，{1、2、4}同样也是团，团里面的结点都必须是互相连接的。还有许多的团并没有全部列举出来，比如{0、4}，{1、2}，{4、3}等等。</p><h3 id="极大团-maximal-clique"><a href="#极大团-maximal-clique" class="headerlink" title="极大团(maximal clique)"></a>极大团(maximal clique)</h3><p>引自百度百科：<br>如果一个团不被其他任一团所包含，即它不是其他任一团的<a href="https://baike.baidu.com/item/%E7%9C%9F%E5%AD%90%E9%9B%86" target="_blank" rel="noopener">真子集</a>，则称该团为图G的极大团（maximal clique）<br><img src="/2019/08/04/极大团/03.png" alt="图"><br>在我给出的这个图里面，极大团应该有哪些呢？<br><img src="/2019/08/04/极大团/04.png" alt="极大团"><br>我们刚才所说{0、5}和{0、5、4}都是团，但是对于{0、5}来说，当我们把结点4添加进去以后，依然可以构成一个团{0、5、4}所以{0、5}不是一个极大团，而对于{0、5、4}我们在图中已经不能找到一个结点添加进去，可以让其构成团了，所以{0、5、4}是一个极大团。<br><img src="/2019/08/04/极大团/05.png" alt="所有的极大团"><br>图中共有4个极大团，对于这些团，都无法在原图中找到一个结点，加入其中，会使其成为一个新团。所以他们都是极大团。</p><h3 id="最大团-maximum-clique"><a href="#最大团-maximum-clique" class="headerlink" title="最大团(maximum clique)"></a>最大团(maximum clique)</h3><p>最大团就是就是结点数最多的极大团。<br><img src="/2019/08/04/极大团/06.png" alt="最大团"><br>我们刚才已经列出了所有的极大团，显然最大团就是有三个结点的这三个团。<br>最大团就是在全局上最大的团（也就是结点最多）<br>极大团就是在局部上最大的团。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;参考资料：&lt;br&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=132XR-RLNoY&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Bron-Kerbosch算法视频介绍&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://
+      
+    
+    </summary>
+    
+      <category term="知识总结" scheme="http://bowiee.github.io/categories/%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="图" scheme="http://bowiee.github.io/tags/%E5%9B%BE/"/>
+    
+  </entry>
   
   <entry>
     <title>算法导论：快速排序</title>
@@ -391,9 +416,9 @@
       <category term="知识总结" scheme="http://bowiee.github.io/categories/%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="mysql" scheme="http://bowiee.github.io/tags/mysql/"/>
-    
       <category term="java" scheme="http://bowiee.github.io/tags/java/"/>
+    
+      <category term="mysql" scheme="http://bowiee.github.io/tags/mysql/"/>
     
   </entry>
   
