@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="参考资料：MULE算法不确定图上的枚举算法研究Bron-Kerbosch算法视频介绍Bron-Kerbosch算法MULE（Maximal Uncertain CLique Enumeration ）算法的论文原文是 Mining Maximal Cliques from an Uncertain Graph 12论文作者：Arko Provo Mukherjee  ，Pan Xu，Srikant">
+<meta name="keywords" content="论文,图">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在不确定图(uncertain graph)中结合Bron-Kerbosch算法和MULE算法寻找极大团(maximal clique)">
+<meta property="og:url" content="http://bowiee.github.io/2019/08/15/B-R-And-MULE/index.html">
+<meta property="og:site_name" content="不务正业的博客">
+<meta property="og:description" content="参考资料：MULE算法不确定图上的枚举算法研究Bron-Kerbosch算法视频介绍Bron-Kerbosch算法MULE（Maximal Uncertain CLique Enumeration ）算法的论文原文是 Mining Maximal Cliques from an Uncertain Graph 12论文作者：Arko Provo Mukherjee  ，Pan Xu，Srikant">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/15/B-R-And-MULE/01.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/15/B-R-And-MULE/02.png">
+<meta property="og:updated_time" content="2019-08-15T10:44:17.166Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在不确定图(uncertain graph)中结合Bron-Kerbosch算法和MULE算法寻找极大团(maximal clique)">
+<meta name="twitter:description" content="参考资料：MULE算法不确定图上的枚举算法研究Bron-Kerbosch算法视频介绍Bron-Kerbosch算法MULE（Maximal Uncertain CLique Enumeration ）算法的论文原文是 Mining Maximal Cliques from an Uncertain Graph 12论文作者：Arko Provo Mukherjee  ，Pan Xu，Srikant">
+<meta name="twitter:image" content="http://bowiee.github.io/2019/08/15/B-R-And-MULE/01.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://bowiee.github.io/2019/08/15/B-R-And-MULE/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  
+  <title>在不确定图(uncertain graph)中结合Bron-Kerbosch算法和MULE算法寻找极大团(maximal clique) | 不务正业的博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不务正业的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">学习的时光</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bowiee.github.io/2019/08/15/B-R-And-MULE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bowiee">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/moon.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不务正业的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">在不确定图(uncertain graph)中结合Bron-Kerbosch算法和MULE算法寻找极大团(maximal clique)
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-15 18:38:43 / 修改时间：18:44:17" itemprop="dateCreated datePublished" datetime="2019-08-15T18:38:43+08:00">2019-08-15</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/知识总结/" itemprop="url" rel="index"><span itemprop="name">知识总结</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span title="本文字数">17k</span>
+            </span>
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span title="阅读时长">15 分钟</span>
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>参考资料：<br><a href="https://blog.csdn.net/zzuchengming/article/details/50879559" target="_blank" rel="noopener">MULE算法</a><br><a href="http://cdmd.cnki.com.cn/Article/CDMD-10216-1017726668.htm" target="_blank" rel="noopener">不确定图上的枚举算法研究</a><br><a href="https://www.youtube.com/watch?v=132XR-RLNoY" target="_blank" rel="noopener">Bron-Kerbosch算法视频介绍</a><br><a href="https://blog.csdn.net/yo_bc/article/details/77453478" target="_blank" rel="noopener">Bron-Kerbosch算法</a><br>MULE（Maximal Uncertain CLique Enumeration ）算法的论文原文是 <a href="https://ieeexplore.ieee.org/document/7113288" target="_blank" rel="noopener">Mining Maximal Cliques from an Uncertain Graph</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">论文作者：Arko Provo Mukherjee  ，Pan Xu，Srikanta Tirthapura</span><br><span class="line">发表时间：2015 IEEE 31st International Conference on Data Engineering</span><br></pre></td></tr></table></figure>
+
+<p>Bron-Kerbosch算法是在确定图上找出极大团，MULE算法是在不确定图上找出极大团。<br>&emsp;&emsp;我们现在的目的，是要在不确定图上找出极大团，现有的不确定图上极大团枚举算法中，基于顶点编号升序的典型算法—MULE 算法性能较好，其时间复杂度为 O(n·2<sup>n</sup>)。但是MULE 算法的时间代价会随着不确定图顶点规模的增大而急剧上升，而随着大数据和互联网技术的发展，不确定图的顶点规模越来越大，那么 MULE 算法也将难以满足实际应用的需求。<br>因此，通过将原图划分为子图，过滤掉其中绝对不可能成为 α-极大团的顶点集合，提高算法的计算效率，从而达到优化时间性能的目的。<br>算法的主要思想：<br>先不考虑原图中边上的概率，通过Bron-Kerbosch算法在原图中，找到一个个极大团子图。再对这每一个极大团子图，使用MULE算法，找出我们所需要的不确定图中的极大团。<br><img src="/2019/08/15/B-R-And-MULE/01.png" alt="原不确定图"><br>&emsp;&emsp;例如这是原不确定图，在不考虑概率的情况下，我们利用Bron-Kerbosch算法可以得到5个极大团子图，分别是{1，2，3}、{2，3，5}、{3，4，5}、{5，6}、{6，7，8，9}。<br>&emsp;&emsp;接下来对每一个极大团子图调用 MULE 算法，枚举其中的 α-极大团（这里给定α=0.1，团概率大于等于0.1的就是α-极大团，团概率就是团中每条边上权值的乘积）对于顶点集合{1，2，3}所代表的极大团子图，调用 MULE 算法，可得顶点集合{1，2，3}本身就是一个 α-极大团；对于顶点集合{2，3，5}所代表的极大团子图，调用 MULE 算法，可得顶点集合{2，3}、{2，5}以及{3，5}是 α-极大团；对于顶点集合{3，4，5}所代表的极大团子图，调用 MULE 算法，可得顶点集合{3，4}、{3，5}以及{4，5}是 α-极大团；对于顶点集合{5，6}所代表的极大团子图，调用 MULE 算法，可得顶点集合{5，6}本身就是一个 α-极大团；对于顶点集合{6，7，8，9}所代表的极大团子图，调用 MULE 算法，可得顶点集合{6，7，8，9}本身就是一个 α-极大团。因此，在对每一个极大团子图调用 MULE 算法后，得到的所有 α-极大团为{1，2，3}、{2，3}、{2，5}、{3，5}、{3，4}、{3，5}、{4，5}、{5，6}以及{6，7，8，9}共计 9 个 α-极大团。<br>&emsp;&emsp;在原图中，给定 α = 0.1，那么不确定图 G 中的 α-极大团分别为顶点集合{1，2，3}、{2，5}、{3，4}、{3，5}、{4，5}、{5，6}以及{6，7，8，9}，共 7 个 α-极大团。可是现在有了9个，多出了两个，这多出的两个，可以通过验证算法去掉，以后再详细介绍，这里不考虑，我只需要求出最后的9个极大团，就算完成任务。<br>下面是代码：<br>头文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Vertex_Value.h</span><br><span class="line">#pragma once</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">//这个相当于临接表中的边界点</span><br><span class="line">class Vertex_Value</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">	Vertex_Value(void);</span><br><span class="line">	~Vertex_Value(void);</span><br><span class="line">	Vertex_Value(int x, float y);</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">	int vertex;  //邻接表中边结点的编号</span><br><span class="line">	float val;    //结点之间的概率</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">node.h</span><br><span class="line">#pragma once</span><br><span class="line">#include &quot;Vertex_Value.h&quot;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">//相当于头结点</span><br><span class="line">class node</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">	int vertex;    //头节点的结点编号</span><br><span class="line">	vector&lt;Vertex_Value&gt; vec;  //这里用vector动态数组来放边结点，Vertex_Value表示边结点，其中有结点编号，以及边上的概率</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">UDG.h</span><br><span class="line">#pragma once</span><br><span class="line">#include &quot;Vertex_Value.h&quot;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">//相当于头结点</span><br><span class="line">class node</span><br><span class="line">&#123;</span><br><span class="line">#pragma once</span><br><span class="line">#include &quot;node.h&quot;</span><br><span class="line"></span><br><span class="line">class UDG</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">	int vernum, arcnum;</span><br><span class="line">	node *AdjVector;//是邻接vector的形式 一个数组名字叫AdjVector,数组里面存放的是node形式的的数据</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ReadFile.h</span><br><span class="line">#pragma once</span><br><span class="line">#include &quot;UDG.h&quot;</span><br><span class="line"></span><br><span class="line">#define path &quot;F:\\c++_code\\test2.txt&quot;</span><br><span class="line">//读取文件</span><br><span class="line">class ReadFile</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">	ReadFile(void);</span><br><span class="line">	~ReadFile(void);</span><br><span class="line">	void CreateUdg(UDG &amp;g); //读取文件后，构建出不确定图出来</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">BasicFunctions.h</span><br><span class="line">#pragma once</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &quot;UDG.h&quot;</span><br><span class="line">#include &quot;Vertex_Value.h&quot;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">#define $ 0.1 //概率阈值，极大团的团概率要大于这个值</span><br><span class="line">class BasicFunctions</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">	BasicFunctions(void);</span><br><span class="line">	~BasicFunctions(void);</span><br><span class="line"></span><br><span class="line">	vector&lt;UDG&gt; Bron_Kerbosch(const UDG g);//把不确定图作为确定图来看待，得到所有的极大团子图</span><br><span class="line"></span><br><span class="line">	void MULE(const UDG g);//在不确定图g中，找到所有团概率大于阈值的极大团</span><br><span class="line"></span><br><span class="line">	void EnumUncertainMC(vector&lt;int&gt; C, float q, vector&lt;Vertex_Value&gt; I, vector&lt;Vertex_Value&gt;&amp; X, UDG g);//在MULE算法中枚举图中的极大团</span><br><span class="line"></span><br><span class="line">	vector&lt;Vertex_Value&gt; GenerateI(vector&lt;int&gt; C, float q, vector&lt;Vertex_Value&gt; I, UDG g);//在MULE算法中，用来更新I集合</span><br><span class="line"></span><br><span class="line">	vector&lt;Vertex_Value&gt; GenerateX(vector&lt;int&gt; C, float q, vector&lt;Vertex_Value&gt; X, UDG g);//在MULE算法中，用来更新X集合</span><br><span class="line"></span><br><span class="line">	void fuzhufunction(vector&lt;int&gt; C, float q, vector&lt;Vertex_Value&gt; I, vector&lt;Vertex_Value&gt;&amp; X, int i, UDG g);//在MULE算法中的辅助函数</span><br><span class="line"></span><br><span class="line">	bool IfConnect(int u, int v, UDG g);  //判断在图g中，结点u和结点v是否连接</span><br><span class="line"></span><br><span class="line">	void Enum_Deterministic(vector &lt;int&gt; all, vector &lt;int&gt; some, vector &lt;int&gt; none, UDG g);//用在Bron_Kerbosch算法中，枚举图中的极大团</span><br><span class="line"></span><br><span class="line">	vector&lt;int&gt; GenerateSome(vector &lt;int&gt; all, vector &lt;int&gt; some, UDG g);//用在Enum_Deterministic中，更新其中的some集合</span><br><span class="line"></span><br><span class="line">	vector&lt;int&gt; GenerateNone(vector &lt;int&gt; all, vector &lt;int&gt; none, UDG g);//用在Enum_Deterministic中，更新其中的none集合</span><br><span class="line"></span><br><span class="line">	int MaxC(vector&lt;int&gt; C);//找当前团C中的最大顶点编号</span><br><span class="line"></span><br><span class="line">	vector&lt;int&gt; AdjVertex(int m, UDG g);//找到图g中，m结点的所有邻接点</span><br><span class="line"></span><br><span class="line">	vector&lt;int&gt; mixede(vector&lt;int&gt; A, vector&lt;int&gt; B);//求两个vector的交集</span><br><span class="line"></span><br><span class="line">	bool isbelongto(int m, vector&lt;int&gt; S1);//检测m顶点是否属于S1；</span><br><span class="line"></span><br><span class="line">	float FindValue(int u, int v, UDG g);//给定顶点对，找权值</span><br><span class="line"></span><br><span class="line">	float clq(vector&lt;int&gt; C, float q, Vertex_Value D, int m, UDG g);//求当前团加入一个顶点后的团概率</span><br><span class="line"></span><br><span class="line">	vector&lt;int&gt; AdjVertex_MULE(int m, UDG g);//在MULE中使用，找到m的所有邻居结点</span><br><span class="line"></span><br><span class="line">	float FindValue_MULE(int u, int v, UDG g);//在MULE中使用，找到结点u和结点v之间的权值</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>下面是cpp文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Vertex_Value.cpp</span><br><span class="line">#include &quot;Vertex_Value.h&quot;</span><br><span class="line"></span><br><span class="line">Vertex_Value::Vertex_Value(void)</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Vertex_Value::~Vertex_Value(void)</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line">Vertex_Value::Vertex_Value(int x, float y)</span><br><span class="line">&#123;</span><br><span class="line">	vertex = x;</span><br><span class="line">	val = y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">ReadFile.cpp</span><br><span class="line">#include &quot;ReadFile.h&quot;</span><br><span class="line">#include &lt;fstream&gt;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">ReadFile::ReadFile(void)</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ReadFile::~ReadFile(void)</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line">void ReadFile::CreateUdg(UDG &amp;g)</span><br><span class="line">&#123;</span><br><span class="line">	ifstream infile(path);      //读取path里面的文本</span><br><span class="line">	cout &lt;&lt; &quot;开始读入文件！&quot; &lt;&lt; endl;</span><br><span class="line">	infile &gt;&gt; g.vernum &gt;&gt; g.arcnum;   //infile在这里就类似cin操作，cin是读取键盘输入，而infile是读取文件输入 &gt;&gt; 操作返回的是左操作数，也就是给g.vernum和g.arcnum赋值了</span><br><span class="line">	cout &lt;&lt; &quot;顶点个数和边数为：&quot; &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; g.vernum &lt;&lt; &apos; &apos; &lt;&lt; g.arcnum &lt;&lt; endl;</span><br><span class="line">	g.AdjVector = new node[g.vernum + 1];//0号不存结点，能储存g.vernum个结点的数组AdjVector，g.AdjVector[0]中不存放数据</span><br><span class="line">	cout &lt;&lt; &quot;开始读入边，建立邻接vector！&quot; &lt;&lt; endl;</span><br><span class="line">	int i;</span><br><span class="line">	for (i = 0; i &lt; g.arcnum; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		int head, tail;</span><br><span class="line">		float val;</span><br><span class="line">		infile &gt;&gt; head &gt;&gt; tail &gt;&gt; val;  //文本里读取文件到空格结束，循环结束以后进入到下一行</span><br><span class="line">		g.AdjVector[head].vertex = head;   //这样可以完成顺序存放，这样g.AdjVector[1]中，存放的是头节点为1的结点，其他结点也都是对应的</span><br><span class="line">		Vertex_Value temp;</span><br><span class="line">		temp.vertex = tail;</span><br><span class="line">		temp.val = val;</span><br><span class="line">		g.AdjVector[head].vec.push_back(temp);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br></pre></td><td class="code"><pre><span class="line">BasicFunctions.cpp</span><br><span class="line"></span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include &lt;iterator&gt; </span><br><span class="line">#include &quot;UDG.h&quot;</span><br><span class="line">#include &quot;BasicFunctions.h&quot;</span><br><span class="line"></span><br><span class="line">vector&lt;UDG&gt; Amc;//用来装Bron_Kerbosch算法产生的极大团子图</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">BasicFunctions::BasicFunctions(void)</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">BasicFunctions::~BasicFunctions(void)</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//***********************************************************************</span><br><span class="line">//判断在图g中结点u和结点v是否相连</span><br><span class="line">bool BasicFunctions::IfConnect(int u, int v, UDG g)</span><br><span class="line">&#123;</span><br><span class="line">	int i;</span><br><span class="line">	unsigned int j;</span><br><span class="line">	for (i = 1; i &lt;= g.vernum; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (g.AdjVector[i].vertex == u)</span><br><span class="line">		&#123;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	for (j = 0; j &lt; g.AdjVector[i].vec.size(); j++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (v == g.AdjVector[i].vec[j].vertex)</span><br><span class="line">		&#123;</span><br><span class="line">			//cout &lt;&lt; &quot;结点&quot; &lt;&lt; u &lt;&lt; &quot;和结点&quot; &lt;&lt; v &lt;&lt; &quot;相连&quot; &lt;&lt; endl;</span><br><span class="line">			return true;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	//cout &lt;&lt; &quot;结点&quot; &lt;&lt; u &lt;&lt; &quot;和结点&quot; &lt;&lt; v &lt;&lt; &quot;不相连&quot; &lt;&lt; endl;</span><br><span class="line">	return false;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//***********************************************************************</span><br><span class="line">//检测m顶点是否属于S1；</span><br><span class="line">bool BasicFunctions::isbelongto(int m, vector&lt;int&gt; S1)</span><br><span class="line">&#123;</span><br><span class="line">	for (unsigned int i = 0; i &lt; S1.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (m == S1[i])</span><br><span class="line">		&#123;</span><br><span class="line">			return true;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return false;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//***********************************************************************</span><br><span class="line">//求两个vector的交集</span><br><span class="line">vector&lt;int&gt; BasicFunctions::mixede(vector&lt;int&gt; A, vector&lt;int&gt; B)</span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;int&gt; v;</span><br><span class="line">	sort(A.begin(), A.end());</span><br><span class="line">	sort(B.begin(), B.end());</span><br><span class="line">	set_intersection(A.begin(), A.end(), B.begin(), B.end(), back_inserter(v));//求交集 ,必须引入&lt;algorithm&gt;、&lt;iterator&gt;才能使用这些函数</span><br><span class="line">	return v;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//***********************************************************************</span><br><span class="line">//找当前团C中的最大顶点编号</span><br><span class="line">int BasicFunctions::MaxC(vector&lt;int&gt; C)</span><br><span class="line">&#123;</span><br><span class="line">	if (C.empty())</span><br><span class="line">	&#123;</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line">	int max = 1;</span><br><span class="line">	unsigned int i;</span><br><span class="line">	for (i = 0; i &lt; C.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (max &lt; C[i])</span><br><span class="line">		&#123;</span><br><span class="line">			max = C[i];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return max;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//***********************************************************************</span><br><span class="line">//找到图g中，m结点的所有邻接点</span><br><span class="line">vector&lt;int&gt; BasicFunctions::AdjVertex(int m, UDG g)</span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;int&gt; C;</span><br><span class="line">	unsigned int i;</span><br><span class="line">	for (i = 0; i &lt; g.AdjVector[m].vec.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		C.push_back(g.AdjVector[m].vec[i].vertex);</span><br><span class="line">	&#125;</span><br><span class="line">	return C;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//***********************************************************************</span><br><span class="line">//找到图g中，m结点的所有邻接点</span><br><span class="line">vector&lt;int&gt; BasicFunctions::AdjVertex_MULE(int m, UDG g)</span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;int&gt; C;</span><br><span class="line">	int i;</span><br><span class="line">	unsigned int j;</span><br><span class="line">	for (i = 1; i &lt;= g.vernum; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (g.AdjVector[i].vertex == m) break;</span><br><span class="line">	&#125;</span><br><span class="line">	for (j = 0; j &lt; g.AdjVector[i].vec.size(); j++)</span><br><span class="line">	&#123;</span><br><span class="line">		C.push_back(g.AdjVector[i].vec[j].vertex);</span><br><span class="line">	&#125;</span><br><span class="line">	return C;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//***********************************************************************</span><br><span class="line"></span><br><span class="line">float BasicFunctions::FindValue_MULE(int u, int v, UDG g)</span><br><span class="line">&#123;</span><br><span class="line">	unsigned int i;</span><br><span class="line">	int j;</span><br><span class="line">	for (j = 1; j &lt;= g.vernum; j++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (g.AdjVector[j].vertex == u) break;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	for (i = 0; i &lt; g.AdjVector[j].vec.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (g.AdjVector[j].vec[i].vertex == v)</span><br><span class="line">		&#123;</span><br><span class="line">			return g.AdjVector[j].vec[i].val;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//***********************************************************************</span><br><span class="line">//找到图g中，结点u和结点v之间的权值</span><br><span class="line">float BasicFunctions::FindValue(int u, int v, UDG g)</span><br><span class="line">&#123;</span><br><span class="line">	unsigned int i;</span><br><span class="line"></span><br><span class="line">	for (i = 0; i &lt; g.AdjVector[u].vec.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (g.AdjVector[u].vec[i].vertex == v)</span><br><span class="line">		&#123;</span><br><span class="line">			return g.AdjVector[u].vec[i].val;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">//***********************************************************************</span><br><span class="line">//这个是求，如果将结点D加入加入极大团C后，团概率会变成什么值</span><br><span class="line">float BasicFunctions::clq(vector&lt;int&gt; C, float q, Vertex_Value D, int m, UDG g)</span><br><span class="line">&#123;</span><br><span class="line">	float temp;</span><br><span class="line">	temp = FindValue_MULE(D.vertex, m, g);</span><br><span class="line">	return q * D.val * temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//***********************************************************************</span><br><span class="line">//在MULE算法中，用来更新X集合</span><br><span class="line">vector&lt;Vertex_Value&gt; BasicFunctions::GenerateX(vector&lt;int&gt; C, float q, vector&lt;Vertex_Value&gt; X, UDG g)</span><br><span class="line">&#123;</span><br><span class="line">	if (X.empty())</span><br><span class="line">	&#123;</span><br><span class="line">		return X;</span><br><span class="line">	&#125;</span><br><span class="line">	int m = MaxC(C);</span><br><span class="line">	vector&lt;int&gt; S2 = AdjVertex_MULE(m, g);</span><br><span class="line">	vector&lt;Vertex_Value&gt; _X;</span><br><span class="line">	vector&lt;int&gt; S1;</span><br><span class="line">	unsigned int i;</span><br><span class="line">	for (i = 0; i &lt; X.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		S1.push_back(X[i].vertex);</span><br><span class="line">	&#125;</span><br><span class="line">	S1 = mixede(S1, S2);</span><br><span class="line">	unsigned int j;</span><br><span class="line">	for (i = 0, j = 0; i &lt; X.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (isbelongto(X[i].vertex, S1))</span><br><span class="line">		&#123;</span><br><span class="line">			if (clq(C, q, X[i], m, g) &gt;= $)</span><br><span class="line">			&#123;</span><br><span class="line">				_X.push_back(X[i]);</span><br><span class="line">				_X[j].val = _X[j].val * FindValue_MULE(_X[j].vertex, m, g);</span><br><span class="line">				j++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return _X;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//***********************************************************************</span><br><span class="line">//在MULE算法中，用来更新I集合</span><br><span class="line">vector&lt;Vertex_Value&gt; BasicFunctions::GenerateI(vector&lt;int&gt; C, float q, vector&lt;Vertex_Value&gt; I, UDG g)</span><br><span class="line">&#123;</span><br><span class="line">	int m = MaxC(C);    //找到C中编号最大的点</span><br><span class="line">	vector&lt;int&gt; S2 = AdjVertex_MULE(m, g); //在图g中找到m的邻居接点</span><br><span class="line">	vector&lt;Vertex_Value&gt; _I;</span><br><span class="line">	vector&lt;int&gt; S1;</span><br><span class="line">	unsigned int i;</span><br><span class="line">	for (i = 0; i &lt; I.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		S1.push_back(I[i].vertex);</span><br><span class="line">	&#125;</span><br><span class="line">	S1 = mixede(S1, S2);</span><br><span class="line">	unsigned int j = 0;</span><br><span class="line">	for (i = 0, j; i &lt; I.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (I[i].vertex &gt; m &amp;&amp; isbelongto(I[i].vertex, S1))</span><br><span class="line">		&#123;</span><br><span class="line">			if (clq(C, q, I[i], m, g) &gt;= $)</span><br><span class="line">			&#123;</span><br><span class="line">				_I.push_back(I[i]);</span><br><span class="line">				_I[j].val = _I[j].val * FindValue_MULE(_I[j].vertex, m, g);</span><br><span class="line">				j++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return _I;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//***********************************************************************</span><br><span class="line">//EnumUncertainMC中的辅助函数</span><br><span class="line">void BasicFunctions::fuzhufunction(vector&lt;int&gt; C, float q, vector&lt;Vertex_Value&gt; I, vector&lt;Vertex_Value&gt;&amp; X, int i, UDG g)</span><br><span class="line">&#123;</span><br><span class="line">	C.push_back(I[i].vertex);</span><br><span class="line">	q = q * I[i].val;</span><br><span class="line">	vector&lt;Vertex_Value&gt; _I = GenerateI(C, q, I, g);</span><br><span class="line">	vector&lt;Vertex_Value&gt; _X = GenerateX(C, q, X, g);</span><br><span class="line">	EnumUncertainMC(C, q, _I, _X, g);</span><br><span class="line">	X.push_back(I[i]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//***********************************************************************</span><br><span class="line">//在MULE算法中，找到满足要求的极大团</span><br><span class="line">void BasicFunctions::EnumUncertainMC(vector&lt;int&gt; C, float q, vector&lt;Vertex_Value&gt; I, vector&lt;Vertex_Value&gt;&amp; X, UDG g)</span><br><span class="line">&#123;</span><br><span class="line">	unsigned int i;</span><br><span class="line">	if (I.empty() &amp;&amp; X.empty())</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; &quot;通过MULE算法产生一个极大团！&quot; &lt;&lt; endl;</span><br><span class="line">		for (i = 0; i &lt; C.size(); i++)</span><br><span class="line">		&#123;</span><br><span class="line">			cout &lt;&lt; C[i] &lt;&lt; &apos; &apos;;</span><br><span class="line">		&#125;</span><br><span class="line">		cout &lt;&lt; endl;</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	vector&lt;int&gt; Ctemp(C);</span><br><span class="line">	for (i = 0; i &lt; I.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		fuzhufunction(Ctemp, q, I, X, i, g);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//***********************************************************************</span><br><span class="line">//用在Enum_Deterministic中，更新其中的none集合</span><br><span class="line">vector&lt;int&gt; BasicFunctions::GenerateNone(vector &lt;int&gt; all, vector &lt;int&gt; none, UDG g)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	int m = MaxC(all);    //找到C中编号最大的点</span><br><span class="line">	vector&lt;int&gt; S2 = AdjVertex(m, g); //在图g中找到m的邻居接点</span><br><span class="line">	vector&lt;int&gt; _none;</span><br><span class="line">	vector&lt;int&gt; S1;</span><br><span class="line">	unsigned int i;</span><br><span class="line">	for (i = 0; i &lt; none.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		S1.push_back(none[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	S1 = mixede(S1, S2);   //保证some中放的结点，都是和all中所有结点连接的</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	for (i = 0; i &lt; none.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (isbelongto(none[i], S1))</span><br><span class="line">		&#123;</span><br><span class="line">			_none.push_back(none[i]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return _none;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//***********************************************************************</span><br><span class="line">//用在Enum_Deterministic中，更新其中的some集合</span><br><span class="line">vector&lt;int&gt; BasicFunctions::GenerateSome(vector &lt;int&gt; all, vector &lt;int&gt; some, UDG g)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	int m = MaxC(all);    //找到all中编号最大的点</span><br><span class="line">	vector&lt;int&gt; S2 = AdjVertex(m, g); //在图g中找到m的邻居接点</span><br><span class="line">	vector&lt;int&gt; _some;</span><br><span class="line">	vector&lt;int&gt; S1;</span><br><span class="line">	unsigned int i;</span><br><span class="line">	for (i = 0; i &lt; some.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		S1.push_back(some[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	S1 = mixede(S1, S2);   //保证some中放的结点，都是和all中所有结点连接的</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	for (i = 0; i &lt; some.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (some[i] &gt; m &amp;&amp; isbelongto(some[i], S1))</span><br><span class="line">		&#123;</span><br><span class="line">			_some.push_back(some[i]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return _some;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//***********************************************************************</span><br><span class="line">//用在Bron_Kerbosch算法中，枚举图中的极大团</span><br><span class="line">void BasicFunctions::Enum_Deterministic(vector &lt;int&gt; all, vector &lt;int&gt; some, vector &lt;int&gt; none, UDG g)</span><br><span class="line">&#123;</span><br><span class="line">	unsigned int i;</span><br><span class="line">	if (some.empty() &amp;&amp; none.empty())    //两者都为空，则找到极大团</span><br><span class="line">	&#123;</span><br><span class="line">		UDG g_t;</span><br><span class="line">		g_t.vernum = all.size();</span><br><span class="line">		g_t.arcnum = (all.size()*(all.size()-1));</span><br><span class="line">		g_t.AdjVector = new node[all.size() + 1];</span><br><span class="line">		cout &lt;&lt; &quot;通过Bron_Kerbosch算法产生一个极大团子图！&quot; &lt;&lt; endl;</span><br><span class="line">		for (i = 0; i &lt; all.size(); i++)</span><br><span class="line">		&#123;</span><br><span class="line">			cout &lt;&lt; all[i] &lt;&lt; &apos; &apos;;</span><br><span class="line">			g_t.AdjVector[i + 1] = g.AdjVector[all[i]];</span><br><span class="line">		&#125;</span><br><span class="line">		cout &lt;&lt; endl;</span><br><span class="line">		Amc.push_back(g_t);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	vector&lt;int&gt; allTemp(all);   //将all中的所有值，都赋给allTemp，allTemp用来递归到下一层（去放置极大团）</span><br><span class="line">	for (i = 0; i &lt; some.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		allTemp.push_back(some[i]);//更新下一层中的allTemp</span><br><span class="line">		vector&lt;int&gt; _some = GenerateSome(allTemp, some, g);//产生新的some集合。要保证新的some集合，要和allTemp集合中的所有结点都连接</span><br><span class="line">		vector&lt;int&gt; _none = GenerateNone(allTemp, none, g);//产生新的none集合。要保证新的none集合，要和allTemp集合中的所有结点都连接</span><br><span class="line">		Enum_Deterministic(allTemp, _some, _none, g);   //带着新的all,some,none集合进入到下一层中</span><br><span class="line"></span><br><span class="line">		none.push_back(some[i]);//将some[i]放入none中，表示在这一层里面，由some[i]开始的极大团，已经探索过了</span><br><span class="line"></span><br><span class="line">		allTemp.pop_back(); //将some[i]从allTemp中拿出，开始下一轮的for循环，在下一轮的for循环中，放入新的some[i]</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//***********************************************************************</span><br><span class="line">//总算法的第一步，从原图中得到所有的极大团子图</span><br><span class="line">vector&lt;UDG&gt; BasicFunctions::Bron_Kerbosch(const UDG g)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	vector &lt;int&gt; some(g.vernum);//声明一个初始大小为g.vernum的Vertex_Value类型的向量_I，_I中存放的结点，就是预备要放入C中的</span><br><span class="line">	vector&lt;int&gt; all;       //声明一个int型向量all，就是极大团</span><br><span class="line">	vector&lt;int&gt; none;   //声明一个Vertex_Value型向量X ，X存放已经探索过的某结点。</span><br><span class="line">	int i = 1;</span><br><span class="line">	for (i; i &lt;= g.vernum; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		some[i - 1] = i;   //将所有的结点编号存放在some中</span><br><span class="line">	&#125;</span><br><span class="line">	Enum_Deterministic(all, some, none, g);</span><br><span class="line"></span><br><span class="line">	return Amc;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//***********************************************************************</span><br><span class="line">//总算法的第二步，从每个极大团子图中，找到满足概率阈值的极大团</span><br><span class="line">void BasicFunctions::MULE(const UDG g)</span><br><span class="line">&#123;</span><br><span class="line">	vector &lt;Vertex_Value&gt; _I(g.vernum);//声明一个初始大小为g.vernum的Vertex_Value类型的向量_I，_I中存放的结点，就是预备要放入C中的</span><br><span class="line">	vector&lt;int&gt; C;       //声明一个int型向量C</span><br><span class="line">	vector&lt;Vertex_Value&gt; X;   //声明一个Vertex_Value型向量X ，X存放已经探索过的某结点。</span><br><span class="line">	int i = 1;</span><br><span class="line">	for (i; i &lt;= g.vernum; i++)   //先初始化_I，其中存放（u,r），其中u就是Vertex_Value中的vertex（表示结点的编号），r就是Vertex_Value中的val（表示将该节点加入到极大团C后，所要乘上的概率）</span><br><span class="line">	&#123;</span><br><span class="line">		_I[i - 1].vertex = g.AdjVector[i].vertex;</span><br><span class="line">		_I[i - 1].val = 1;   //最开始都赋值为1</span><br><span class="line">	&#125;</span><br><span class="line">	float j = 1;</span><br><span class="line">	EnumUncertainMC(C, j, _I, X, g);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面是主函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;tchar.h&gt;</span><br><span class="line">#include &quot;ReadFile.h&quot;</span><br><span class="line">#include &quot;BasicFunctions.h&quot;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int _tmain(int argc, _TCHAR* argv[])</span><br><span class="line">&#123;</span><br><span class="line">	UDG g;  </span><br><span class="line">	ReadFile A;</span><br><span class="line">	vector&lt;UDG&gt; Amc;</span><br><span class="line">	A.CreateUdg(g);</span><br><span class="line">	BasicFunctions BF;</span><br><span class="line">	Amc = BF.Bron_Kerbosch(g);</span><br><span class="line">	unsigned int i;</span><br><span class="line"></span><br><span class="line">	for (i = 0; i &lt; Amc.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		BF.MULE(Amc[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	system(&quot;pause&quot;); //暂停黑窗口</span><br><span class="line">	return 0;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>test2.txt如下:<br>9表示结点数，28表示边数（这里的1 2和2 1算不同的边）<br>第一位数字是头结点，第二位数字是边结点，第三个数字是边上的概率</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">9 28</span><br><span class="line">1 2 0.6</span><br><span class="line">1 3 0.5</span><br><span class="line">2 1 0.6</span><br><span class="line">2 3 0.4</span><br><span class="line">2 5 0.7</span><br><span class="line">3 1 0.5</span><br><span class="line">3 2 0.4</span><br><span class="line">3 4 0.5</span><br><span class="line">3 5 0.1</span><br><span class="line">4 3 0.5</span><br><span class="line">4 5 0.2</span><br><span class="line">5 2 0.7</span><br><span class="line">5 3 0.1</span><br><span class="line">5 4 0.2</span><br><span class="line">5 6 0.4</span><br><span class="line">6 5 0.4</span><br><span class="line">6 7 0.7</span><br><span class="line">6 8 0.9</span><br><span class="line">6 9 0.8</span><br><span class="line">7 6 0.7</span><br><span class="line">7 8 0.7</span><br><span class="line">7 9 0.6</span><br><span class="line">8 6 0.9</span><br><span class="line">8 7 0.7</span><br><span class="line">8 9 0.6</span><br><span class="line">9 6 0.8</span><br><span class="line">9 7 0.6</span><br><span class="line">9 8 0.6</span><br></pre></td></tr></table></figure>
+
+<p>实验结果：<br><img src="/2019/08/15/B-R-And-MULE/02.png" alt="实验结果"></p>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/论文/" rel="tag"># 论文</a>
+          
+            <a href="/tags/图/" rel="tag"># 图</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/14/生成极大团子图2/" rel="next" title="在不确定图(uncertain graph)中利用Bron-Kerbosch算法发现极大团(maximal clique)（另一种方法）">
+                <i class="fa fa-chevron-left"></i> 在不确定图(uncertain graph)中利用Bron-Kerbosch算法发现极大团(maximal clique)（另一种方法）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  
+    <img class="site-author-image" itemprop="image" src="/images/moon.jpg" alt="Bowiee">
+  
+  <p class="site-author-name" itemprop="name">Bowiee</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+
+
+  <nav class="site-state motion-element">
+    
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+
+
+
+
+  <div class="links-of-author motion-element">
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/Bowiee" title="GitHub &rarr; https://github.com/Bowiee" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://www.jianshu.com/u/49232dff0a05" title="简书 &rarr; https://www.jianshu.com/u/49232dff0a05" rel="noopener" target="_blank"><i class="fa fa-fw fa-chain-broken"></i>简书</a>
+      </span>
+    
+  </div>
+
+
+
+
+
+
+  <div class="links-of-blogroll motion-element links-of-blogroll-block">
+    <div class="links-of-blogroll-title">
+      <i class="fa  fa-fw fa-link"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+      
+        <li class="links-of-blogroll-item">
+          <a href="https://www.liaoxuefeng.com/" title="https://www.liaoxuefeng.com/" rel="noopener" target="_blank">廖雪峰的官方网站</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+          
+          
+        </div>
+      </div>
+
+      
+
+      
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bowiee</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">68k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    
+    <span title="站点阅读时长">1:02</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+
+<script>
+// GET RESPONSIVE HEIGHT PASSED FROM IFRAME
+
+window.addEventListener("message", function(e) {
+  var data = e.data;
+  if ((typeof data === 'string') && (data.indexOf('ciu_embed') > -1)) {
+    var featureID = data.split(':')[1];
+    var height = data.split(':')[2];
+    $(`iframe[data-feature=${featureID}]`).height(parseInt(height) + 30);
+  }
+}, false);
+</script>
+
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
