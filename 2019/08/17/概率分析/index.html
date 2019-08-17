@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="参考资料：概率分析和随机算法雇佣问题在讲述概率分析和随机算法之前，需要先简单介绍一下，概率论的基础知识 基础知识伯努利试验：在相同条件下，重复地进行n次相互独立的实验 。有两种可能的结果，成功概率：p、失败概率：q=1-p。例如：进行n次抛硬币的实验。几何分布：在n次伯努利试验中，试验k次才得到第一次成功的机率。（是离散型概率分布）例如：进行n次抛硬币,试验k次才得到第一次正面的概率。几何分布的概">
+<meta name="keywords" content="算法导论">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法导论：概率分析和随机算法">
+<meta property="og:url" content="http://bowiee.github.io/2019/08/17/概率分析/index.html">
+<meta property="og:site_name" content="不务正业的博客">
+<meta property="og:description" content="参考资料：概率分析和随机算法雇佣问题在讲述概率分析和随机算法之前，需要先简单介绍一下，概率论的基础知识 基础知识伯努利试验：在相同条件下，重复地进行n次相互独立的实验 。有两种可能的结果，成功概率：p、失败概率：q=1-p。例如：进行n次抛硬币的实验。几何分布：在n次伯努利试验中，试验k次才得到第一次成功的机率。（是离散型概率分布）例如：进行n次抛硬币,试验k次才得到第一次正面的概率。几何分布的概">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/17/概率分析/01.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/17/概率分析/02.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/17/概率分析/03.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/17/概率分析/04.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/17/概率分析/05.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/17/概率分析/06.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/17/概率分析/07.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/17/概率分析/08.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/17/概率分析/09.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/17/概率分析/10.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/17/概率分析/11.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/17/概率分析/12.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/17/概率分析/13.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/17/概率分析/14.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/17/概率分析/15.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/17/概率分析/16.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/17/概率分析/17.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/17/概率分析/18.png">
+<meta property="og:updated_time" content="2019-08-17T13:15:35.178Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法导论：概率分析和随机算法">
+<meta name="twitter:description" content="参考资料：概率分析和随机算法雇佣问题在讲述概率分析和随机算法之前，需要先简单介绍一下，概率论的基础知识 基础知识伯努利试验：在相同条件下，重复地进行n次相互独立的实验 。有两种可能的结果，成功概率：p、失败概率：q=1-p。例如：进行n次抛硬币的实验。几何分布：在n次伯努利试验中，试验k次才得到第一次成功的机率。（是离散型概率分布）例如：进行n次抛硬币,试验k次才得到第一次正面的概率。几何分布的概">
+<meta name="twitter:image" content="http://bowiee.github.io/2019/08/17/概率分析/01.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://bowiee.github.io/2019/08/17/概率分析/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  
+  <title>算法导论：概率分析和随机算法 | 不务正业的博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不务正业的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">学习的时光</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bowiee.github.io/2019/08/17/概率分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bowiee">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/moon.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不务正业的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">算法导论：概率分析和随机算法
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-17 21:04:20 / 修改时间：21:15:35" itemprop="dateCreated datePublished" datetime="2019-08-17T21:04:20+08:00">2019-08-17</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法导论/" itemprop="url" rel="index"><span itemprop="name">算法导论</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span title="本文字数">1.8k</span>
+            </span>
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span title="阅读时长">2 分钟</span>
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>参考资料：<br><a href="https://www.cnblogs.com/dongkuo/p/4807953.html" target="_blank" rel="noopener">概率分析和随机算法</a><br><a href="https://www.cnblogs.com/jmzz/archive/2011/08/11/2134647.html" target="_blank" rel="noopener">雇佣问题</a><br>在讲述概率分析和随机算法之前，需要先简单介绍一下，概率论的基础知识</p>
+<h4 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h4><p><strong>伯努利试验</strong>：在相同条件下，重复地进行n次相互独立的实验 。<br>有两种可能的结果，成功概率：p、失败概率：q=1-p。<br>例如：进行n次抛硬币的实验。<br><strong>几何分布</strong>：在n次伯努利试验中，试验k次才得到第一次成功的机率。（是离散型概率分布）<br>例如：进行n次抛硬币,试验k次才得到第一次正面的概率。<br>几何分布的概率与期望分别是：<br><img src="/2019/08/17/概率分析/01.png" alt="几何分布的概率与期望"><br><strong>二项分布</strong>：重复n次独立的伯努利试验。在每次试验中只有两种可能的结果，而且两种结果发生与否互相对立，并且相互独立，与其它各次试验结果无关，事件发生与否的概率在每一次独立试验中都保持不变，则这一系列试验总称为n重伯努利实验。<br>例如：进行完n次抛硬币之后,正面出现的次数<br>二项分布的概率与期望：<br><img src="/2019/08/17/概率分析/02.png" alt="二项分布的概率与期望"><br><strong>0-1分布</strong>：就是试验次数为1的二项分布<br>0-1分布的期望：<br><img src="/2019/08/17/概率分析/03.png" alt="0-1分布的期望"><br>当然还有一个很重要的调和级数：<br><img src="/2019/08/17/概率分析/04.png" alt="调和级数"></p>
+<h4 id="概率分析"><a href="#概率分析" class="headerlink" title="概率分析"></a>概率分析</h4><p>我们先从一个简单的问题开始，来介绍概率分析：<br>首先介绍雇佣问题：假设你要雇佣一个新的办公室助理，雇佣代理每天想你推荐一个应聘者（连续推荐n个），你面试这个人，如果这个应聘者比目前的办公室助理更优秀，你就会辞掉当前的办公室助理，然后聘用这个新的。面试一个人需付给雇佣代理一笔费用，聘用办公助理也需要费用。<br>也就是只要面试了（不管最后有没有聘用），就要花费a，如果聘用了，就要再花费b。<br><img src="/2019/08/17/概率分析/05.png" alt="雇佣问题"><br>例如，现在有一个人，参加了面试并且最后被聘用了，就要花费a+b的费用。<br><img src="/2019/08/17/概率分析/06.png" alt="雇佣问题"><br>所以总的花费就是a<em>n+b</em>m，其中n是面试的总人数，m是雇佣的次数，我们最后只雇佣最优秀的人，所以只要比前一个雇佣的人优秀，那么就开除前一个人，雇佣当前的人。<br><img src="/2019/08/17/概率分析/07.png" alt="雇佣花费"><br>所以会有两种情况出现：<br><strong>最好情况</strong>：面试n次但只雇佣一次(即第一个人就是最优秀的人)<br>那么雇佣费用为：a<em>n+b</em>1<br><strong>最坏情况</strong>：面试n次,应聘者质量按出现的次序严格递增.   面试n次,雇佣n次<br>那么雇佣费用为：a<em>n+b</em>n<br>但是应聘者并非总以质量递增递减次序出现,因此,平均情况下,会雇用多少次？为了解决这个问题，我们就需要进行概率分析了。为了进行概率分析就必须假设输入分布。<br>在雇用问题中<br>假设应聘者以随机顺序出现.即第i应聘者都等可能的被雇用。假设任意两个应聘者间可以比较,可以确定哪一个更有资格。此时，计算平均情况下的雇用费用，即计算雇用一个新的办公助理的期望。<br>用X表示雇用新办公助理的次数,则：<br><img src="/2019/08/17/概率分析/08.png" alt="期望"><br>其中Pr{X = x}表示在整个过程中，雇佣了x次的概率，这个计算起来会很麻烦。<br>所以我们可以换一种思路，将其分解成多个0-1分布来分析：<br><img src="/2019/08/17/概率分析/09.png" alt="0-1分布"><br>我们将X<sub>i</sub>看做0-1分布，即i被雇佣则为1，不被雇佣则为0。根据前面所说0-1分布的期望，就是1的概率，在这里也就是应聘者i被雇佣的概率。i被雇佣说明他是前i个人里面最优秀的那一个，那第i个人是前i个人里最优秀的概率是多少呢？显然是1/i，也就是应聘者i被雇佣的概率是1/i。那么我们可以得出X<sub>i</sub>的期望E[X<sub>i</sub>]=1/i。<br>那么X也就是所有应聘者组成的分布的期望E(X)，根据调和级数，可以计算出结果，如上图所示。<br>所以可以得出在平均情况下的费用：<br><img src="/2019/08/17/概率分析/10.png" alt="平均情况费用"><br>从上面雇佣问题中，我想我们已经了解到了概率分析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">概率分析定义：用概率论方法对不确定性问题进行定量研究，为决策提供定量的依据。</span><br></pre></td></tr></table></figure>
+
+<p>例如：<br><img src="/2019/08/17/概率分析/11.png" alt="概率分析"><br>这个算法是随着输入的变化而变化的，对于某个特定的输入，它总是会产生固定的雇佣次数 — 确定型算法</p>
+<h4 id="随机算法"><a href="#随机算法" class="headerlink" title="随机算法"></a>随机算法</h4><p>概率分析是在，输入已经确定的基础上进行的分析，但是在大多数情况下,输入的分布信息无法得知,只能采用随机算法。<br><img src="/2019/08/17/概率分析/12.png" alt="随机算法"><br>如图所示，将输入的序列随机打乱，可以消除或者减少最坏情况的发生。<br>在这里重要的就是RANDOM过程，共有两种打乱方法，分别是随机排列数组和原址排列数组。<br><strong>随机排列数组</strong><br><img src="/2019/08/17/概率分析/13.png" alt="随机排列数组"><br>会给原数组中的每一个元素，生成一个优先级数据，当然生成的数字大小范围是1到结点个数的3次方。<br>最后根据优先级排序，得到结果。<br><strong>原址排列数组</strong><br><img src="/2019/08/17/概率分析/14.png" alt="原址排列数组"><br>这种方法就是将第一个数与后面随机选择的数进行交换。<br><img src="/2019/08/17/概率分析/15.png" alt="原址排列数组"><br>例如将第一个数0和后面的数字8进行交换<br><img src="/2019/08/17/概率分析/16.png" alt="原址排列数组"><br>这里将数字2和数字5进行交换。就是这样进行，这种方法比上一种要好。<br>概率分析和随机算法的区别<br><img src="/2019/08/17/概率分析/17.png" alt="概率分析和随机算法"><br>概率分析：对于某个特定的输入，它总是会产生固定的结果。<br>随机算法：随机算法的随机发生在算法上，而不是发生在输入分布上 .对输入进行随机再排列。<br>最后的小结：<br><img src="/2019/08/17/概率分析/18.png" alt="小结"></p>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/算法导论/" rel="tag"># 算法导论</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/15/B-R-And-MULE/" rel="next" title="在不确定图(uncertain graph)中结合Bron-Kerbosch算法和MULE算法寻找极大团(maximal clique)">
+                <i class="fa fa-chevron-left"></i> 在不确定图(uncertain graph)中结合Bron-Kerbosch算法和MULE算法寻找极大团(maximal clique)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  
+    <img class="site-author-image" itemprop="image" src="/images/moon.jpg" alt="Bowiee">
+  
+  <p class="site-author-name" itemprop="name">Bowiee</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+
+
+  <nav class="site-state motion-element">
+    
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+
+
+
+
+  <div class="links-of-author motion-element">
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/Bowiee" title="GitHub &rarr; https://github.com/Bowiee" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://www.jianshu.com/u/49232dff0a05" title="简书 &rarr; https://www.jianshu.com/u/49232dff0a05" rel="noopener" target="_blank"><i class="fa fa-fw fa-chain-broken"></i>简书</a>
+      </span>
+    
+  </div>
+
+
+
+
+
+
+  <div class="links-of-blogroll motion-element links-of-blogroll-block">
+    <div class="links-of-blogroll-title">
+      <i class="fa  fa-fw fa-link"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+      
+        <li class="links-of-blogroll-item">
+          <a href="https://www.liaoxuefeng.com/" title="https://www.liaoxuefeng.com/" rel="noopener" target="_blank">廖雪峰的官方网站</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+          
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#基础知识"><span class="nav-number">1.</span> <span class="nav-text">基础知识</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#概率分析"><span class="nav-number">2.</span> <span class="nav-text">概率分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#随机算法"><span class="nav-number">3.</span> <span class="nav-text">随机算法</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bowiee</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">70k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    
+    <span title="站点阅读时长">1:03</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+
+<script>
+// GET RESPONSIVE HEIGHT PASSED FROM IFRAME
+
+window.addEventListener("message", function(e) {
+  var data = e.data;
+  if ((typeof data === 'string') && (data.indexOf('ciu_embed') > -1)) {
+    var featureID = data.split(':')[1];
+    var height = data.split(':')[2];
+    $(`iframe[data-feature=${featureID}]`).height(parseInt(height) + 30);
+  }
+}, false);
+</script>
+
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
