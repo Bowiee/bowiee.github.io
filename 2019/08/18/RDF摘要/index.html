@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="论文：RDF graph summarization: principles, techniques and applications原文链接参考资料：RDF-知乎RDF的初步了解RDF，RDFS与OWL 123论文题目：RDF graph summarization: principles, techniques and applications发表时间：EDBT Conference, Mar">
+<meta name="keywords" content="论文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文阅读：RDF graph summarization: principles, techniques and applications">
+<meta property="og:url" content="http://bowiee.github.io/2019/08/18/RDF摘要/index.html">
+<meta property="og:site_name" content="不务正业的博客">
+<meta property="og:description" content="论文：RDF graph summarization: principles, techniques and applications原文链接参考资料：RDF-知乎RDF的初步了解RDF，RDFS与OWL 123论文题目：RDF graph summarization: principles, techniques and applications发表时间：EDBT Conference, Mar">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/18/RDF摘要/01.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/18/RDF摘要/02.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/18/RDF摘要/03.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/18/RDF摘要/04.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/18/RDF摘要/05.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/18/RDF摘要/06.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/18/RDF摘要/07.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/18/RDF摘要/08.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/18/RDF摘要/09.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/18/RDF摘要/10.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/18/RDF摘要/11.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/18/RDF摘要/12.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/18/RDF摘要/13.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/18/RDF摘要/14.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/18/RDF摘要/15.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/18/RDF摘要/16.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/18/RDF摘要/17.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/18/RDF摘要/18.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/18/RDF摘要/19.png">
+<meta property="og:image" content="http://bowiee.github.io/2019/08/18/RDF摘要/20.png">
+<meta property="og:updated_time" content="2019-08-18T09:04:29.975Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="论文阅读：RDF graph summarization: principles, techniques and applications">
+<meta name="twitter:description" content="论文：RDF graph summarization: principles, techniques and applications原文链接参考资料：RDF-知乎RDF的初步了解RDF，RDFS与OWL 123论文题目：RDF graph summarization: principles, techniques and applications发表时间：EDBT Conference, Mar">
+<meta name="twitter:image" content="http://bowiee.github.io/2019/08/18/RDF摘要/01.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://bowiee.github.io/2019/08/18/RDF摘要/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  
+  <title>论文阅读：RDF graph summarization: principles, techniques and applications | 不务正业的博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不务正业的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">学习的时光</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://bowiee.github.io/2019/08/18/RDF摘要/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bowiee">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/moon.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不务正业的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">论文阅读：RDF graph summarization: principles, techniques and applications
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-18 16:58:10 / 修改时间：17:04:29" itemprop="dateCreated datePublished" datetime="2019-08-18T16:58:10+08:00">2019-08-18</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/论文阅读/" itemprop="url" rel="index"><span itemprop="name">论文阅读</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span title="本文字数">2.8k</span>
+            </span>
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span title="阅读时长">3 分钟</span>
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>论文：RDF graph summarization: principles, techniques and applications<br><a href="https://openproceedings.org/2019/conf/edbt/EDBT_tutorial_1.pdf" target="_blank" rel="noopener">原文链接</a><br>参考资料：<br><a href="https://www.zhihu.com/question/28706033" target="_blank" rel="noopener">RDF-知乎</a><br><a href="https://www.jianshu.com/p/5a9135b6f017" target="_blank" rel="noopener">RDF的初步了解</a><br><a href="https://zhuanlan.zhihu.com/p/32122644" target="_blank" rel="noopener">RDF，RDFS与OWL</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">论文题目：RDF graph summarization: principles, techniques and applications</span><br><span class="line">发表时间：EDBT Conference, March 26-29, 2019</span><br><span class="line">论文作者：Haridimos Kondylakis  、Dimitris Kotzinos  、Ioana Manolescu</span><br></pre></td></tr></table></figure>
+
+<p>论文作者详细介绍：<br><img src="/2019/08/18/RDF摘要/01.png" alt="Haridimos Kondylakis"><br>FORTH-ICS 合作研究员，克里特岛大学毕业（希腊），博士。<br>基于语义的大数据管理主题及其在医疗保健领域的应用。<br>语义Web上的知识表示与管理,信息提取</p>
+<p><img src="/2019/08/18/RDF摘要/02.png" alt="Dimitris Kotzinos"><br>FORTH-ICS 研究员，克里特岛大学毕业（希腊），博士。<br>从社交网络中提取知识,智能交通系统,基于Web的信息系统。</p>
+<p><img src="/2019/08/18/RDF摘要/03.png" alt="Ioana Manolescu"><br>巴黎综合理工学院，国家信息与自动化研究所，领导者。凡尔赛大学（法国），博士。<br>处理大量拥有复杂结构和语义的数据，比如模型，算法和技术。</p>
+<h4 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h4><p>随着时代的发展。图数据集已经越来越大了，相应的RDF数据集的规模已经越来越庞大了，并且很复杂，所以我们需要对其进行简化。<br><img src="/2019/08/18/RDF摘要/04.png" alt="图数据"><br>RDF数据集的规模已经越来越庞大了，并且很复杂，下图是不同数据集之间的连接情况，所以我们需要对其进行简化。不同领域间的数据连接情况。<br><img src="/2019/08/18/RDF摘要/05.png" alt="不同领域的数据连接情况"></p>
+<h4 id="RDF-and-RDFS"><a href="#RDF-and-RDFS" class="headerlink" title="RDF and RDFS"></a>RDF and RDFS</h4><p>The Resource Description Framework (RDF)<br>RDF 是知识图谱中，用于描述事物的一种手段，知识的形式化表示,用来描述半结构化的知识。<br>主要是为了让计算机理解我们的知识，所以用这种方式存储。是因为，计算机一直面临着这样的困境——无法获取网络文本的语义信息。尽管近些年人工智能得到了长足的发展，在某些任务上取得超越人类的成绩，但实际上还是没有拥有类似与人的智力。有人认为，这背后有一部分原因是机器缺少知识。<br>例如：现在给计算机输入一句话“苹果公司的ceo是一个叫库克的人”，计算机并不知道平果公司表示的是叫苹果的公司还是表示的是卖苹果的公司。<br><img src="/2019/08/18/RDF摘要/06.png" alt="RDF"><br>为了让计算机也能读懂这个信息，所以需要RDF，RDF将一条条知识描述为一个三元组，由主语(Subject) – 谓语(Predicate) – 宾语(Object)组成<br>例如刚才那条信息可以写成{ 苹果, 是, 公司 }, { 库克, 是, 人 }, { 苹果, CEO 是, 库克 }<br>这样我们就可以得到完整的信息。但是即便如此，依然能出现状况，例如现在输入一条信息，{ 苹果, 是, 水果 }，现在苹果又是公司，又是水果的，计算机可能就崩溃了，无法理解这种情况的出现。<br><img src="/2019/08/18/RDF摘要/07.png" alt="RDF"><br>所以我们会增加标识符，例如这里可以用1表示苹果公司中的苹果，用2表示水果中的苹果，这样就可以独一无二的标识这些信息。<br>RDF 中，主语谓语宾语受类型约束<br>主语可以是 IRI，或空结点<br>谓语只能是 IRI：关系是预先定义的<br>宾语可以是 IRI，也可以是字面量<br><img src="/2019/08/18/RDF摘要/08.png" alt="RDF"><br>上图就是一个rdf图的表现形式，显示出了一本书的出版时间，标题，依据作者等等信息。<br><img src="/2019/08/18/RDF摘要/09.png" alt="RDF不足"><br>但是rdf还是有所不足的，比如这里doi是一本书，同时也是出版物，这种情况是经常出现在rdf图中的，同时还有右边，一本书的作者和被谁写，这两个等价的关系，也是经常出现的，但是rdf中要体现的话，就只能预先定义，这样做是非常麻烦的。<br>于是乎，提出了RDF Schema<br><img src="/2019/08/18/RDF摘要/10.png" alt="RDFS"><br>RDFS就是给在rdf中，经常出现的关系做了提前的定义，方便在图中的使用。!<br>其中subclassof就是子类的意思，subproperty就是子属性的意思，domain和range就是，主语和宾语的取值范围.。RDFS就相当于给RDF的词组进行了扩充。<br><img src="/2019/08/18/RDF摘要/11.png" alt="rdfs"><br>将rdfs与rdf都用上时，就是如下图所示，其中虚线，是更具上图中的关系进行推断的，例如doi是Book，Book是Publication的子类，那doi当然是Publication的子类。</p>
+<h4 id="RDF-summarization"><a href="#RDF-summarization" class="headerlink" title="RDF summarization"></a>RDF summarization</h4><p>对rdf进行摘要的原理就是： quotient graphs（商图）<br>当然这种方法主要针对的是rdf的结构进行摘要。<br><img src="/2019/08/18/RDF摘要/12.png" alt="quotient graphs"><br>商图就是定义结点的等价关系，两个结点的编号差值（i-j）能整出6，那么就说这两个结点是等价的。就可以得到上图中，右边的结构。<br><img src="/2019/08/18/RDF摘要/13.png" alt="RDF summarization"><br>上图的右边就是RDF图，右边就是摘要后的结构。<br>我们在这里定义等价关系，根据输入，输出来定义等价关系。比如这里a1的输入是a，输出是空，a2也是如此，所以认为a1和a2是等价的。于是进行合并，最后得到右边的图。<br><img src="/2019/08/18/RDF摘要/14.png" alt="RDF summarization"><br>但是这样做可能会导致丢失信息，例如上图右边的Book和Person他们的输入和输出是一样的，这样会将它们作为等价结点进行合并，最终导致信息的丢失。<br>所以规定，对于class（也就是所属的类别）和property(边上定义的那些关系)，只能和自己等价，比如Book就只能和其他的Book结点等价。<br><img src="/2019/08/18/RDF摘要/15.png" alt="RDF summarization"><br>根据我刚才的规则，可以对RDF进行摘要，获得上图。<br><img src="/2019/08/18/RDF摘要/16.png" alt="property cliques"><br>现在，我们可以对结点进行新的关系定义，使这个摘要效果更好。可以根据输入属性集和输出属性集来判断结点的关系。其中的output属性，n1就是a , b , d的来源，因为a , b肯定相关，n2那里有b , d , 所以b , d 相关，最后的出a , b , d 都是来源相关的。我们在这里定义了另一种关系。在这里我们可以把n1当作是一篇论文，那它会有作者，标题这些属性，n2也是一篇论文，会有作者，何时出版这些属性，而这些属性很有可能同时出现在另外一篇论文中，所以他们是来源相关的。我们这么做的理由是什么，因为有同一类属性的结点，就很有可能是等价的结点。<br><strong>Weak clique-based summaries</strong><br>基于弱集群的摘要<br><img src="/2019/08/18/RDF摘要/17.png" alt="Weak clique-based summaries"><br>弱属性集群，就是对于结点来说，只要在输入属性集群和输出属性集群里面，只要有一个相同，那么就认为是等价的。比如这里的n1,n2,n3,n4，他们的输出属性集都是{a,b,d}，虽然他们的输入属性集群，并不都相同。<br><strong>Strong clique-based summaries</strong><br><img src="/2019/08/18/RDF摘要/18.png" alt="Strong clique-based summaries"><br>显然这个等价关系，就是要求结点的输入属性集群，和输出属性集群完全相同，才是等价关系的，所以只有n1和n2能够合并，n3以及n4都要独立存在。<br><strong>Adding types after data summarization</strong><br>对于这个摘要，我们还并没有对type进行操作，也就是并没有对图中结点所属的类别进行任何的摘要过程（图中所属的类别就是使doi属于Book,我们还并没有对Book进行任何的操作）<br><img src="/2019/08/18/RDF摘要/19.png" alt="Data-then-type"><br>第一种就是，先对数据进行了摘要的过程，在添加type，如上图所示。<br><img src="/2019/08/18/RDF摘要/20.png" alt="Type-then-data"><br>第二种就是先将type添加到数据上，再对数据进行摘要过程，我们会得到完全不同图形，因为有了type，那么输入输出属性集群就已经发生改变了。</p>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/论文/" rel="tag"># 论文</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/17/概率分析/" rel="next" title="算法导论：概率分析和随机算法">
+                <i class="fa fa-chevron-left"></i> 算法导论：概率分析和随机算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  
+    <img class="site-author-image" itemprop="image" src="/images/moon.jpg" alt="Bowiee">
+  
+  <p class="site-author-name" itemprop="name">Bowiee</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+
+
+  <nav class="site-state motion-element">
+    
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+
+
+
+
+  <div class="links-of-author motion-element">
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/Bowiee" title="GitHub &rarr; https://github.com/Bowiee" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://www.jianshu.com/u/49232dff0a05" title="简书 &rarr; https://www.jianshu.com/u/49232dff0a05" rel="noopener" target="_blank"><i class="fa fa-fw fa-chain-broken"></i>简书</a>
+      </span>
+    
+  </div>
+
+
+
+
+
+
+  <div class="links-of-blogroll motion-element links-of-blogroll-block">
+    <div class="links-of-blogroll-title">
+      <i class="fa  fa-fw fa-link"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+      
+        <li class="links-of-blogroll-item">
+          <a href="https://www.liaoxuefeng.com/" title="https://www.liaoxuefeng.com/" rel="noopener" target="_blank">廖雪峰的官方网站</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+          
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RDF-and-RDFS"><span class="nav-number">2.</span> <span class="nav-text">RDF and RDFS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RDF-summarization"><span class="nav-number">3.</span> <span class="nav-text">RDF summarization</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bowiee</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">73k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    
+    <span title="站点阅读时长">1:06</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+
+<script>
+// GET RESPONSIVE HEIGHT PASSED FROM IFRAME
+
+window.addEventListener("message", function(e) {
+  var data = e.data;
+  if ((typeof data === 'string') && (data.indexOf('ciu_embed') > -1)) {
+    var featureID = data.split(':')[1];
+    var height = data.split(':')[2];
+    $(`iframe[data-feature=${featureID}]`).height(parseInt(height) + 30);
+  }
+}, false);
+</script>
+
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

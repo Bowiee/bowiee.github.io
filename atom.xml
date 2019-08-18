@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://bowiee.github.io/"/>
-  <updated>2019-08-17T13:15:35.178Z</updated>
+  <updated>2019-08-18T09:04:29.975Z</updated>
   <id>http://bowiee.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>论文阅读：RDF graph summarization: principles, techniques and applications</title>
+    <link href="http://bowiee.github.io/2019/08/18/RDF%E6%91%98%E8%A6%81/"/>
+    <id>http://bowiee.github.io/2019/08/18/RDF摘要/</id>
+    <published>2019-08-18T08:58:10.000Z</published>
+    <updated>2019-08-18T09:04:29.975Z</updated>
+    
+    <content type="html"><![CDATA[<p>论文：RDF graph summarization: principles, techniques and applications<br><a href="https://openproceedings.org/2019/conf/edbt/EDBT_tutorial_1.pdf" target="_blank" rel="noopener">原文链接</a><br>参考资料：<br><a href="https://www.zhihu.com/question/28706033" target="_blank" rel="noopener">RDF-知乎</a><br><a href="https://www.jianshu.com/p/5a9135b6f017" target="_blank" rel="noopener">RDF的初步了解</a><br><a href="https://zhuanlan.zhihu.com/p/32122644" target="_blank" rel="noopener">RDF，RDFS与OWL</a></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">论文题目：RDF graph summarization: principles, techniques and applications</span><br><span class="line">发表时间：EDBT Conference, March 26-29, 2019</span><br><span class="line">论文作者：Haridimos Kondylakis  、Dimitris Kotzinos  、Ioana Manolescu</span><br></pre></td></tr></table></figure><p>论文作者详细介绍：<br><img src="/2019/08/18/RDF摘要/01.png" alt="Haridimos Kondylakis"><br>FORTH-ICS 合作研究员，克里特岛大学毕业（希腊），博士。<br>基于语义的大数据管理主题及其在医疗保健领域的应用。<br>语义Web上的知识表示与管理,信息提取</p><p><img src="/2019/08/18/RDF摘要/02.png" alt="Dimitris Kotzinos"><br>FORTH-ICS 研究员，克里特岛大学毕业（希腊），博士。<br>从社交网络中提取知识,智能交通系统,基于Web的信息系统。</p><p><img src="/2019/08/18/RDF摘要/03.png" alt="Ioana Manolescu"><br>巴黎综合理工学院，国家信息与自动化研究所，领导者。凡尔赛大学（法国），博士。<br>处理大量拥有复杂结构和语义的数据，比如模型，算法和技术。</p><h4 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h4><p>随着时代的发展。图数据集已经越来越大了，相应的RDF数据集的规模已经越来越庞大了，并且很复杂，所以我们需要对其进行简化。<br><img src="/2019/08/18/RDF摘要/04.png" alt="图数据"><br>RDF数据集的规模已经越来越庞大了，并且很复杂，下图是不同数据集之间的连接情况，所以我们需要对其进行简化。不同领域间的数据连接情况。<br><img src="/2019/08/18/RDF摘要/05.png" alt="不同领域的数据连接情况"></p><h4 id="RDF-and-RDFS"><a href="#RDF-and-RDFS" class="headerlink" title="RDF and RDFS"></a>RDF and RDFS</h4><p>The Resource Description Framework (RDF)<br>RDF 是知识图谱中，用于描述事物的一种手段，知识的形式化表示,用来描述半结构化的知识。<br>主要是为了让计算机理解我们的知识，所以用这种方式存储。是因为，计算机一直面临着这样的困境——无法获取网络文本的语义信息。尽管近些年人工智能得到了长足的发展，在某些任务上取得超越人类的成绩，但实际上还是没有拥有类似与人的智力。有人认为，这背后有一部分原因是机器缺少知识。<br>例如：现在给计算机输入一句话“苹果公司的ceo是一个叫库克的人”，计算机并不知道平果公司表示的是叫苹果的公司还是表示的是卖苹果的公司。<br><img src="/2019/08/18/RDF摘要/06.png" alt="RDF"><br>为了让计算机也能读懂这个信息，所以需要RDF，RDF将一条条知识描述为一个三元组，由主语(Subject) – 谓语(Predicate) – 宾语(Object)组成<br>例如刚才那条信息可以写成{ 苹果, 是, 公司 }, { 库克, 是, 人 }, { 苹果, CEO 是, 库克 }<br>这样我们就可以得到完整的信息。但是即便如此，依然能出现状况，例如现在输入一条信息，{ 苹果, 是, 水果 }，现在苹果又是公司，又是水果的，计算机可能就崩溃了，无法理解这种情况的出现。<br><img src="/2019/08/18/RDF摘要/07.png" alt="RDF"><br>所以我们会增加标识符，例如这里可以用1表示苹果公司中的苹果，用2表示水果中的苹果，这样就可以独一无二的标识这些信息。<br>RDF 中，主语谓语宾语受类型约束<br>主语可以是 IRI，或空结点<br>谓语只能是 IRI：关系是预先定义的<br>宾语可以是 IRI，也可以是字面量<br><img src="/2019/08/18/RDF摘要/08.png" alt="RDF"><br>上图就是一个rdf图的表现形式，显示出了一本书的出版时间，标题，依据作者等等信息。<br><img src="/2019/08/18/RDF摘要/09.png" alt="RDF不足"><br>但是rdf还是有所不足的，比如这里doi是一本书，同时也是出版物，这种情况是经常出现在rdf图中的，同时还有右边，一本书的作者和被谁写，这两个等价的关系，也是经常出现的，但是rdf中要体现的话，就只能预先定义，这样做是非常麻烦的。<br>于是乎，提出了RDF Schema<br><img src="/2019/08/18/RDF摘要/10.png" alt="RDFS"><br>RDFS就是给在rdf中，经常出现的关系做了提前的定义，方便在图中的使用。!<br>其中subclassof就是子类的意思，subproperty就是子属性的意思，domain和range就是，主语和宾语的取值范围.。RDFS就相当于给RDF的词组进行了扩充。<br><img src="/2019/08/18/RDF摘要/11.png" alt="rdfs"><br>将rdfs与rdf都用上时，就是如下图所示，其中虚线，是更具上图中的关系进行推断的，例如doi是Book，Book是Publication的子类，那doi当然是Publication的子类。</p><h4 id="RDF-summarization"><a href="#RDF-summarization" class="headerlink" title="RDF summarization"></a>RDF summarization</h4><p>对rdf进行摘要的原理就是： quotient graphs（商图）<br>当然这种方法主要针对的是rdf的结构进行摘要。<br><img src="/2019/08/18/RDF摘要/12.png" alt="quotient graphs"><br>商图就是定义结点的等价关系，两个结点的编号差值（i-j）能整出6，那么就说这两个结点是等价的。就可以得到上图中，右边的结构。<br><img src="/2019/08/18/RDF摘要/13.png" alt="RDF summarization"><br>上图的右边就是RDF图，右边就是摘要后的结构。<br>我们在这里定义等价关系，根据输入，输出来定义等价关系。比如这里a1的输入是a，输出是空，a2也是如此，所以认为a1和a2是等价的。于是进行合并，最后得到右边的图。<br><img src="/2019/08/18/RDF摘要/14.png" alt="RDF summarization"><br>但是这样做可能会导致丢失信息，例如上图右边的Book和Person他们的输入和输出是一样的，这样会将它们作为等价结点进行合并，最终导致信息的丢失。<br>所以规定，对于class（也就是所属的类别）和property(边上定义的那些关系)，只能和自己等价，比如Book就只能和其他的Book结点等价。<br><img src="/2019/08/18/RDF摘要/15.png" alt="RDF summarization"><br>根据我刚才的规则，可以对RDF进行摘要，获得上图。<br><img src="/2019/08/18/RDF摘要/16.png" alt="property cliques"><br>现在，我们可以对结点进行新的关系定义，使这个摘要效果更好。可以根据输入属性集和输出属性集来判断结点的关系。其中的output属性，n1就是a , b , d的来源，因为a , b肯定相关，n2那里有b , d , 所以b , d 相关，最后的出a , b , d 都是来源相关的。我们在这里定义了另一种关系。在这里我们可以把n1当作是一篇论文，那它会有作者，标题这些属性，n2也是一篇论文，会有作者，何时出版这些属性，而这些属性很有可能同时出现在另外一篇论文中，所以他们是来源相关的。我们这么做的理由是什么，因为有同一类属性的结点，就很有可能是等价的结点。<br><strong>Weak clique-based summaries</strong><br>基于弱集群的摘要<br><img src="/2019/08/18/RDF摘要/17.png" alt="Weak clique-based summaries"><br>弱属性集群，就是对于结点来说，只要在输入属性集群和输出属性集群里面，只要有一个相同，那么就认为是等价的。比如这里的n1,n2,n3,n4，他们的输出属性集都是{a,b,d}，虽然他们的输入属性集群，并不都相同。<br><strong>Strong clique-based summaries</strong><br><img src="/2019/08/18/RDF摘要/18.png" alt="Strong clique-based summaries"><br>显然这个等价关系，就是要求结点的输入属性集群，和输出属性集群完全相同，才是等价关系的，所以只有n1和n2能够合并，n3以及n4都要独立存在。<br><strong>Adding types after data summarization</strong><br>对于这个摘要，我们还并没有对type进行操作，也就是并没有对图中结点所属的类别进行任何的摘要过程（图中所属的类别就是使doi属于Book,我们还并没有对Book进行任何的操作）<br><img src="/2019/08/18/RDF摘要/19.png" alt="Data-then-type"><br>第一种就是，先对数据进行了摘要的过程，在添加type，如上图所示。<br><img src="/2019/08/18/RDF摘要/20.png" alt="Type-then-data"><br>第二种就是先将type添加到数据上，再对数据进行摘要过程，我们会得到完全不同图形，因为有了type，那么输入输出属性集群就已经发生改变了。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;论文：RDF graph summarization: principles, techniques and applications&lt;br&gt;&lt;a href=&quot;https://openproceedings.org/2019/conf/edbt/EDBT_tutorial_
+      
+    
+    </summary>
+    
+      <category term="论文阅读" scheme="http://bowiee.github.io/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"/>
+    
+    
+      <category term="论文" scheme="http://bowiee.github.io/tags/%E8%AE%BA%E6%96%87/"/>
+    
+  </entry>
   
   <entry>
     <title>算法导论：概率分析和随机算法</title>
@@ -496,31 +521,6 @@
     
     
       <category term="论文" scheme="http://bowiee.github.io/tags/%E8%AE%BA%E6%96%87/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL WorkBench 如何运行sql文件，将其变为数据库</title>
-    <link href="http://bowiee.github.io/2019/07/25/MySQL-WorkBench/"/>
-    <id>http://bowiee.github.io/2019/07/25/MySQL-WorkBench/</id>
-    <published>2019-07-25T08:33:08.000Z</published>
-    <updated>2019-07-26T06:41:31.173Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="MySQL-WorkBench-如何运行sql文件，将其变为数据库"><a href="#MySQL-WorkBench-如何运行sql文件，将其变为数据库" class="headerlink" title="MySQL WorkBench 如何运行sql文件，将其变为数据库"></a>MySQL WorkBench 如何运行sql文件，将其变为数据库</h2><blockquote><p>环境：win10<br>软件：mysql community 5.7.17.0<br>操作时间：2019/7/1</p></blockquote><p>在sql文件里，已经有了生成数据库的语句，这样执行才会生成数据库。<br><strong>下面是操作步骤</strong>：<br><strong>1.打开WorkBench进入操作界面</strong><br><img src="/2019/07/25/MySQL-WorkBench/01.png" alt="进入界面"></p><p>会看到如下图：<br><img src="/2019/07/25/MySQL-WorkBench/02.png" alt="创建数据库界面"></p><p><strong>2.运行sql文件</strong><br>找到运行sql脚本处：<br><img src="/2019/07/25/MySQL-WorkBench/03.png" alt="运行sql文件"></p><p>选取sql文件：<br><img src="/2019/07/25/MySQL-WorkBench/04.png" alt="选取sql文件"></p><p><strong>3.生成数据库</strong><br>最后生成的数据库会显示在图中圈出来部分：<br><img src="/2019/07/25/MySQL-WorkBench/05.png" alt="生成结果"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;MySQL-WorkBench-如何运行sql文件，将其变为数据库&quot;&gt;&lt;a href=&quot;#MySQL-WorkBench-如何运行sql文件，将其变为数据库&quot; class=&quot;headerlink&quot; title=&quot;MySQL WorkBench 如何运行sql文件，
-      
-    
-    </summary>
-    
-      <category term="踩过的坑" scheme="http://bowiee.github.io/categories/%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91/"/>
-    
-    
-      <category term="mysql" scheme="http://bowiee.github.io/tags/mysql/"/>
     
   </entry>
   
